@@ -10,7 +10,7 @@ const WAHA_API_URL = process.env.WAHA_API_URL;
 const WAHA_API_KEY = process.env.WAHA_API_KEY;
 
 if (!WAHA_API_KEY) {
-  throw new Error('WAHA_API_KEY is not set in environment variables');
+  throw new Error('WAHA_API_KEY não está definida nas variáveis de ambiente');
 }
 
 const WAHA_HEADERS = {
@@ -111,12 +111,12 @@ export const userRouter = createTRPCRouter({
         });
 
         if (!response.ok) {
-          console.error('Failed to create WhatsApp session:', response.statusText);
+          console.error('Falha ao criar sessão do WhatsApp:', response.statusText);
           await db.whatsAppSession.update({
             where: { id: whatsappSession.id },
             data: { status: 'DISCONNECTED' },
           });
-          throw new Error('Failed to create WhatsApp session');
+          throw new Error('Não foi possível criar a sessão do WhatsApp');
         }
 
         const startResponse = await fetch(`${WAHA_API_URL}/api/sessions/${whatsappSession.sessionName}/start`, {
@@ -133,15 +133,15 @@ export const userRouter = createTRPCRouter({
               where: { id: whatsappSession.id },
               data: { status: 'DISCONNECTED' },
             });
-          console.error('Failed to start WhatsApp session:', startResponse.statusText);
-          throw new Error('Failed to start WhatsApp session');
+          console.error('Falha ao iniciar sessão do WhatsApp:', startResponse.statusText);
+          throw new Error('Não foi possível iniciar a sessão do WhatsApp');
         }
 
         return { sessionName: whatsappSession.sessionName, id: whatsappSession.id };
       } catch (error) {
         throw new TRPCError({
           code: 'INTERNAL_SERVER_ERROR',
-          message: 'Failed to create WhatsApp session',
+          message: 'Não foi possível criar a sessão do WhatsApp',
           cause: error,
         });
       }
@@ -155,7 +155,7 @@ export const userRouter = createTRPCRouter({
           headers: WAHA_HEADERS,
         });
         if (!response.ok) {
-          throw new Error('Failed to get session status');
+          throw new Error('Não foi possível obter o status da sessão');
         }
 
         const data = await response.json();
@@ -163,7 +163,7 @@ export const userRouter = createTRPCRouter({
       } catch (error) {
         throw new TRPCError({
           code: 'INTERNAL_SERVER_ERROR',
-          message: 'Failed to get session status',
+          message: 'Não foi possível obter o status da sessão',
           cause: error,
         });
       }
@@ -178,7 +178,7 @@ export const userRouter = createTRPCRouter({
         });
 
         if (!response.ok) {
-          throw new Error('Failed to get session QR');
+          throw new Error('Não foi possível obter o QR da sessão');
         }
 
         const imageBuffer = await response.arrayBuffer();
@@ -186,10 +186,10 @@ export const userRouter = createTRPCRouter({
         
         return { qr: base64Image };
       } catch (error) {
-        console.error('Error fetching session QR:', error);
+        console.error('Erro ao buscar QR da sessão:', error);
         throw new TRPCError({
           code: 'INTERNAL_SERVER_ERROR',
-          message: 'Failed to get session QR',
+          message: 'Não foi possível obter o QR da sessão',
           cause: error,
         });
       }
@@ -206,7 +206,7 @@ export const userRouter = createTRPCRouter({
         });
 
         if (!stopResponse.ok) {
-          throw new Error('Failed to stop session');
+          throw new Error('Não foi possível parar a sessão');
         }
 
         // Wait a bit to ensure session is fully stopped
@@ -219,14 +219,14 @@ export const userRouter = createTRPCRouter({
         });
 
         if (!startResponse.ok) {
-          throw new Error('Failed to restart session');
+          throw new Error('Não foi possível reiniciar a sessão');
         }
 
         return { success: true };
       } catch (error) {
         throw new TRPCError({
           code: 'INTERNAL_SERVER_ERROR',
-          message: 'Failed to restart session',
+          message: 'Não foi possível reiniciar a sessão',
           cause: error,
         });
       }
@@ -253,7 +253,7 @@ export const userRouter = createTRPCRouter({
       } catch (error) {
         throw new TRPCError({
           code: 'INTERNAL_SERVER_ERROR',
-          message: 'Failed to update session phone number',
+          message: 'Não foi possível atualizar o telefone da sessão',
           cause: error,
         });
       }
@@ -269,7 +269,7 @@ export const userRouter = createTRPCRouter({
         });
 
         if (!stopResponse.ok) {
-          throw new Error('Failed to stop session');
+          throw new Error('Não foi possível parar a sessão');
         }
 
         const logoutResponse = await fetch(`${WAHA_API_URL}/api/sessions/${input.sessionName}/logout`, {
@@ -278,7 +278,7 @@ export const userRouter = createTRPCRouter({
         });
 
         if (!logoutResponse.ok) {
-          throw new Error('Failed to logout from session');
+          throw new Error('Não foi possível sair da sessão');
         }
 
         const deleteResponse = await fetch(`${WAHA_API_URL}/api/sessions/${input.sessionName}`, {
@@ -287,7 +287,7 @@ export const userRouter = createTRPCRouter({
         });
 
         if (!deleteResponse.ok) {
-          throw new Error('Failed to delete session');
+          throw new Error('Não foi possível excluir a sessão');
         }
 
         await db.whatsAppSession.updateMany({
@@ -304,7 +304,7 @@ export const userRouter = createTRPCRouter({
       } catch (error) {
         throw new TRPCError({
           code: 'INTERNAL_SERVER_ERROR',
-          message: 'Failed to logout from session',
+          message: 'Não foi possível sair da sessão',
           cause: error,
         });
       }
@@ -320,7 +320,7 @@ export const userRouter = createTRPCRouter({
       if (!WAHA_API_URL) {
         throw new TRPCError({
           code: 'INTERNAL_SERVER_ERROR',
-          message: 'WhatsApp API URL is not configured',
+          message: 'A URL da API do WhatsApp não está configurada',
         });
       }
 
@@ -339,7 +339,7 @@ export const userRouter = createTRPCRouter({
           if (!response.ok) {
             throw new TRPCError({
               code: 'INTERNAL_SERVER_ERROR',
-              message: `Failed to fetch WhatsApp groups: ${response.status} ${response.statusText}`,
+              message: `Não foi possível buscar os grupos do WhatsApp: ${response.status} ${response.statusText}`,
             });
           }
 
@@ -377,7 +377,7 @@ export const userRouter = createTRPCRouter({
           if (!response.ok) {
             throw new TRPCError({
               code: 'INTERNAL_SERVER_ERROR',
-              message: `Failed to fetch WhatsApp groups: ${response.status} ${response.statusText}`,
+              message: `Não foi possível buscar os grupos do WhatsApp: ${response.status} ${response.statusText}`,
             });
           }
 
@@ -416,7 +416,7 @@ export const userRouter = createTRPCRouter({
         if (error instanceof Error && error.name === 'AbortError') {
           throw new TRPCError({
             code: 'TIMEOUT',
-            message: 'Request timeout while fetching WhatsApp groups',
+            message: 'Tempo esgotado ao buscar grupos do WhatsApp',
           });
         }
         throw error;
@@ -434,7 +434,7 @@ export const userRouter = createTRPCRouter({
       if (!WAHA_API_URL) {
         throw new TRPCError({
           code: 'INTERNAL_SERVER_ERROR',
-          message: 'WhatsApp API URL is not configured',
+          message: 'A URL da API do WhatsApp não está configurada',
         });
       }
 
@@ -453,7 +453,7 @@ export const userRouter = createTRPCRouter({
           if (!response.ok) {
             throw new TRPCError({
               code: 'INTERNAL_SERVER_ERROR',
-              message: `Failed to fetch WhatsApp contacts: ${response.status} ${response.statusText}`,
+              message: `Não foi possível buscar os contatos do WhatsApp: ${response.status} ${response.statusText}`,
             });
           }
 
@@ -513,7 +513,7 @@ export const userRouter = createTRPCRouter({
         if (!response.ok) {
           throw new TRPCError({
             code: 'INTERNAL_SERVER_ERROR',
-            message: `Failed to fetch WhatsApp contacts: ${response.status} ${response.statusText}`,
+            message: `Não foi possível buscar os contatos do WhatsApp: ${response.status} ${response.statusText}`,
           });
         }
 
@@ -565,7 +565,7 @@ export const userRouter = createTRPCRouter({
         if (error instanceof Error && error.name === 'AbortError') {
           throw new TRPCError({
             code: 'TIMEOUT',
-            message: 'Request timeout while fetching WhatsApp contacts',
+            message: 'Tempo esgotado ao buscar contatos do WhatsApp',
           });
         }
         throw error;

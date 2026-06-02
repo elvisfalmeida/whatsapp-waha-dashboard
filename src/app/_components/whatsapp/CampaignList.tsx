@@ -61,7 +61,7 @@ export function CampaignList({ onEditCampaign }: CampaignListProps) {
   if (!campaigns?.length) {
     return (
       <div className="text-center py-8 text-gray-500">
-        No active campaigns found
+        Nenhuma campanha ativa encontrada
       </div>
     );
   }
@@ -95,7 +95,7 @@ export function CampaignList({ onEditCampaign }: CampaignListProps) {
                   </p>
                   {campaign.targetAmount && (
                     <p className="text-sm text-blue-600 font-medium">
-                      Target: {campaign.targetAmount}
+                      Meta: {campaign.targetAmount}
                     </p>
                   )}
                 </div>
@@ -104,21 +104,21 @@ export function CampaignList({ onEditCampaign }: CampaignListProps) {
                     onClick={() => onEditCampaign?.(campaign)}
                     className="text-blue-600 hover:text-blue-800 text-sm"
                   >
-                    Edit
+                    Editar
                   </button>
                   <button
                     onClick={() => setCampaignToDelete(campaign.id)}
                     className="text-red-600 hover:text-red-800 text-sm"
                     disabled={deleteCampaign.isPending}
                   >
-                    Delete
+                    Excluir
                   </button>
                 </div>
               </div>
 
               <div className="space-y-2">
                 <div className="flex justify-between text-sm">
-                  <span>Progress: {sentCount} of {totalMessages} messages sent</span>
+                  <span>Progresso: {sentCount} de {totalMessages} mensagens enviadas</span>
                   <span className="text-gray-500">{Math.round(progress)}%</span>
                 </div>
                 <div className="w-full bg-gray-200 rounded-full h-2.5">
@@ -132,16 +132,16 @@ export function CampaignList({ onEditCampaign }: CampaignListProps) {
               {nextScheduled && (
                 <div className="text-sm flex flex-col gap-1 text-gray-600 whitespace-pre-wrap border-t pt-2 mt-2">
                   <span className="text-gray-600">
-                    Next message: {nextScheduled.toFormat('LLL dd, t ZZZZ')}
+                    Próxima mensagem: {nextScheduled.toFormat('LLL dd, t ZZZZ')}
                   </span>
                   <span className="text-gray-600">
-                    Scheduled time zone time: {nextScheduled.setZone(campaign.timeZone).toFormat('LLL dd, t ZZZZ')}
+                    Horário no fuso agendado: {nextScheduled.setZone(campaign.timeZone).toFormat('LLL dd, t ZZZZ')}
                   </span>
                 </div>
               )}
 
               <div className="text-sm text-gray-600 whitespace-pre-wrap border-t pt-2 mt-2">
-                <strong>Template:</strong> {campaign.template}
+                <strong>Modelo:</strong> {campaign.template}
               </div>
             </div>
           );
@@ -156,10 +156,10 @@ export function CampaignList({ onEditCampaign }: CampaignListProps) {
             deleteCampaign.mutate({ campaignId: campaignToDelete });
           }
         }}
-        title="Delete Campaign"
-        message="Are you sure you want to delete this campaign? This action cannot be undone."
-        confirmText="Delete Campaign"
-        cancelText="Cancel"
+        title="Excluir campanha"
+        message="Tem certeza de que deseja excluir esta campanha? Esta ação não pode ser desfeita."
+        confirmText="Excluir campanha"
+        cancelText="Cancelar"
       />
     </>
   );

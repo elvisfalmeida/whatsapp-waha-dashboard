@@ -22,12 +22,12 @@ export default function ForgotPasswordForm() {
       });
 
       setMessage(
-        "If an account with that email exists, we've sent you a password reset link."
+        "Se existir uma conta com esse email, enviamos um link para redefinir sua senha."
       );
       setEmail("");
     } catch (err) {
-      console.error("Forgot password error:", err);
-      setError("An error occurred. Please try again.");
+      console.error("Erro ao solicitar redefinição de senha:", err);
+      setError("Ocorreu um erro. Tente novamente.");
     } finally {
       setIsLoading(false);
     }
@@ -38,10 +38,10 @@ export default function ForgotPasswordForm() {
       <form onSubmit={handleSubmit} className="space-y-6">
         <div>
           <h2 className="text-center text-3xl font-bold tracking-tight text-gray-900">
-            Reset your password
+            Redefinir sua senha
           </h2>
           <p className="mt-2 text-center text-sm text-gray-600">
-            Enter your email address and we&apos;ll send you a link to reset your password.
+            Informe seu email e enviaremos um link para redefinir sua senha.
           </p>
         </div>
 
@@ -93,7 +93,7 @@ export default function ForgotPasswordForm() {
 
         <div>
           <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-            Email address
+            Email
           </label>
           <div className="mt-1">
             <input
@@ -105,7 +105,7 @@ export default function ForgotPasswordForm() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               className="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-green-500 focus:outline-none focus:ring-green-500 sm:text-sm"
-              placeholder="Enter your email"
+              placeholder="Informe seu email"
               disabled={isLoading}
             />
           </div>
@@ -139,10 +139,10 @@ export default function ForgotPasswordForm() {
                     d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
                   ></path>
                 </svg>
-                Sending...
+                Enviando...
               </>
             ) : (
-              "Send reset link"
+              "Enviar link de redefinição"
             )}
           </button>
         </div>
@@ -152,7 +152,7 @@ export default function ForgotPasswordForm() {
             href="/auth"
             className="text-sm text-green-600 hover:text-green-500"
           >
-            ← Back to sign in
+            ← Voltar para o login
           </a>
         </div>
       </form>

@@ -1,394 +1,198 @@
-# 📱 WhatsApp Group Manager
+# Gerenciador de Grupos do WhatsApp
 
-A powerful web application built with the T3 Stack to manage WhatsApp groups and schedule messages## 📊 How It Works
+Aplicação web criada com Next.js/T3 Stack para gerenciar grupos do WhatsApp via WAHA, criar campanhas de mensagens e agendar envios.
 
-### 1. Authentication & User Management
-- Users can sign up and await admin approval to access the dashboard
-- Admins receive notifications via WhatsApp and email for new registrations
-- Comprehensive user management with role-based access control (ADMIN, USER, GUEST)
+## Como Funciona
 
-### 2. Campaign Creation & Management
-Create message campaigns by:
-- Selecting target WhatsApp groups with search and pagination
-- Writing your message content with dynamic placeholders (e.g., `{days_left}`)
-- Setting the schedule date and time with timezone support
-- Real-time progress tracking with completion percentages
+### 1. Autenticação e usuários
 
-### 3. Automated Message Delivery
-The background scheduler service:
-- Checks for pending messages every 30 seconds
-- Automatically sends messages when scheduled time arrives
-- Updates campaign status and tracking information in real-time
-- Handles errors and retry logic with detailed logging
+- Usuários podem se cadastrar e aguardar aprovação do administrador.
+- Administradores recebem notificações por WhatsApp e email para novos cadastros.
+- Controle de acesso por papéis: `ADMIN`, `USER` e `GUEST`.
 
-### 4. Admin Dashboard Features
-- Monitor all WhatsApp sessions and their connection status
-- View connected groups and active campaigns
-- Approve/reject user registrations with instant notifications
-- Manage user roles and permissions
-- Restart WhatsApp sessions when needed
+### 2. Campanhas
 
-### 5. Notification System
-- **Dual-Channel Notifications**: Admin notifications sent via both WhatsApp and email
-- **Password Security**: Email notifications for password changes
-- **Registration Alerts**: Instant notifications when new users register
-- **Fallback System**: If WhatsApp notification fails, email is automatically sent application allows you to create message campaigns, schedule them for specific times, and automatically send them to your WhatsApp groups.
+Você pode criar campanhas informando:
 
-## ✨ Features
+- grupos ou contatos de destino;
+- conteúdo da mensagem, com suporte a placeholders como `{days_left}`;
+- data inicial, data final, horário e fuso;
+- recorrência e sequência de mensagens, quando necessário.
 
-- 🔐 **Secure Authentication** - User authentication and authorization with password reset
-- 📧 **Email Password Reset** - Secure password reset via email using Mailgun
-- � **Admin Dashboard** - Comprehensive admin panel for user and campaign management
-- 🔔 **Multi-Channel Notifications** - Admin notifications via both WhatsApp and email
-- �📊 **Campaign Management** - Create and manage message campaigns with progress tracking
-- ⏰ **Message Scheduling** - Schedule messages for specific dates and times
-- 🤖 **Automated Sending** - Background service that automatically sends scheduled messages
-- 📈 **Campaign Analytics** - Track campaign status and completion with detailed progress bars
-- 🎯 **Group Management** - Manage multiple WhatsApp groups with search and pagination
-- 👥 **User Management** - Admin approval system for new user registrations
-- 📱 **Responsive Design** - Works perfectly on desktop and mobile
-- 🔄 **Session Management** - Auto-refresh WhatsApp session status and restart capabilities
+### 3. Envio automático
 
-## 🚀 Tech Stack
+O serviço de agendamento:
 
-- **Framework**: [Next.js 15](https://nextjs.org/) with App Router
-- **Authentication**: [Better Auth](https://www.better-auth.com/) v1.2+
-- **Database**: [MongoDB](https://www.mongodb.com/) with [Prisma](https://prisma.io/) v6.5+
-- **Email Service**: [Mailgun](https://www.mailgun.com/) for password reset and admin notifications
-- **Styling**: [Tailwind CSS](https://tailwindcss.com/) v4.0+
-- **Type Safety**: [TypeScript](https://www.typescriptlang.org/) v5.8+
-- **API**: [tRPC](https://trpc.io/) v11+ for type-safe API calls
-- **State Management**: [TanStack Query](https://tanstack.com/query) for server state
-- **Package Manager**: [pnpm](https://pnpm.io/) v10.4+
-- **Date Handling**: [Luxon](https://moment.github.io/luxon/) for timezone-aware scheduling
+- verifica mensagens pendentes periodicamente;
+- envia mensagens no horário programado;
+- atualiza status, progresso e conclusão das campanhas;
+- registra falhas para acompanhamento.
 
-## 📋 Prerequisites
+## Recursos
 
-Before you begin, ensure you have the following installed:
+- Autenticação segura com redefinição de senha por email.
+- Painel administrativo para usuários, sessões e campanhas.
+- Notificações por WhatsApp e email.
+- Seleção de grupos e contatos com busca.
+- Agendamento de mensagens e campanhas recorrentes.
+- Acompanhamento de progresso das campanhas.
+- Interface responsiva para desktop e mobile.
+- Gerenciamento de sessão WAHA com QR Code.
 
-- Node.js 18+ 
+## Stack
+
+- Next.js 15 com App Router
+- React 19
+- TypeScript
+- tRPC
+- TanStack Query
+- Tailwind CSS
+- Better Auth
+- Prisma
+- MongoDB
+- Mailgun
+- WAHA
 - pnpm
-- MongoDB database
-- WhatsApp Web API Server (WAHA)
 
-## 🛠️ Installation
+## Pré-requisitos
 
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/jevil25/whatsapp-group-manager.git
-   cd whatsapp-group-manager
-   ```
+- Node.js 18+
+- pnpm
+- Banco MongoDB
+- Servidor WAHA acessível pela aplicação
+- Conta Mailgun para emails
 
-2. **Install dependencies**
-   ```bash
-   pnpm install
-   ```
+## Instalação Local
 
-3. **Set up environment variables**
-   Create a `.env` file in the root directory with the following content:
-   ```env
-   # Database
-   DATABASE_URL="mongodb+srv://username:password@cluster.mongodb.net/whatsapp-manager" 
-
-   # WhatsApp API
-   WAHA_API_URL="http://localhost:3000"
-   WAHA_API_KEY="your-waha-api-key" 
-   
-   # Better Auth
-   BETTER_AUTH_SECRET="your-better-auth-secret"
-   BETTER_AUTH_URL="http://localhost:3000"
-   
-   # Mailgun (for password reset emails)
-   MAILGUN_API_KEY="your-mailgun-api-key"
-   MAILGUN_DOMAIN="your-mailgun-domain"
-   FROM_EMAIL="noreply@yourdomain.com"
-   
-   # Admin Configuration
-   ADMIN_EMAIL="admin@yourdomain.com"
-   ADMIN_PHONE_NUMBER="+1234567890" # Optional - for WhatsApp notifications
-   ```
-
-4. **Generate Prisma client**
-   ```bash
-   pnpm prisma:generate
-   ```
-
-5. **Push database schema**
-   ```bash
-   pnpm db:push
-   ```
-
-6. **Start the development server**
-   ```bash
-   pnpm dev
-   ```
-
-Visit [https://whatsapp-groups-manager.vercel.app/](https://whatsapp-groups-manager.vercel.app/) to see your application running!
-
-## � Screenshots & How It Works
-
-### 🔗 Connect Your WhatsApp
-Start by connecting your WhatsApp account to the system. Scan the QR code with your WhatsApp mobile app.
-
-![Connect WhatsApp](screenshots/connect_whatsapp.png)
-
-### 📱 QR Code Scanning
-Use your WhatsApp mobile app to scan the QR code and establish the connection.
-
-![QR Code Scan](screenshots/qr%20code%20scan%20view.png)
-
-### ✅ Connected Dashboard
-Once connected, you can see your WhatsApp session status and manage your campaigns.
-
-![Connected Dashboard](screenshots/connected%20and%20campaign%20view.png)
-
-### � WhatsApp Groups View
-View and manage all your connected WhatsApp groups in one place.
-
-![WhatsApp Groups View](screenshots/whatsapps_group_view.png)
-
-### �📝 Schedule Messages
-Create and schedule messages for your WhatsApp groups with an easy-to-use form.
-
-![Schedule Message Form](screenshots/schedule%20message%20form.png)
-
-### 👑 Admin Dashboard
-Manage all aspects of your WhatsApp campaigns from the comprehensive admin dashboard.
-
-![Admin Dashboard](screenshots/admin%20dashboard.png)
-
-![Admin Dashboard 2](screenshots/admin%20dashbaord%202.png)
-
-## 🆕 Latest Updates & Features
-
-### Enhanced Admin Dashboard
-- **User Approval System**: New users must be approved by admins before gaining access
-- **Multi-Channel Notifications**: Admins receive notifications via both WhatsApp and email for new registrations
-- **Real-time Session Monitoring**: Live status updates for WhatsApp sessions with restart capabilities
-- **User Role Management**: Promote users to admin, revoke access, or delete users
-
-### Improved Campaign Management
-- **Progress Tracking**: Visual progress bars showing campaign completion status
-- **Dynamic Message Templates**: Support for placeholders like `{days_left}` in messages
-- **Advanced Group Selection**: Search and pagination for WhatsApp groups
-- **Campaign Analytics**: Detailed metrics on message delivery and completion
-
-### Enhanced Security & Notifications
-- **Password Change Notifications**: Users receive email confirmations for password changes
-- **Session Management**: Automatic session refresh and manual restart options
-- **Better Error Handling**: Comprehensive error messages and retry logic
-
-## �📊 How It Works
-
-### 1. Authentication & Setup
-Users can sign up and authenticate to access the dashboard where they can manage their WhatsApp campaigns.
-
-### 2. Campaign Creation
-Create message campaigns by:
-- Selecting target WhatsApp groups
-- Writing your message content
-- Setting the schedule date and time
-- Configuring campaign settings
-
-### 3. Automated Message Delivery
-The background scheduler service:
-- Checks for pending messages every 30 seconds
-- Automatically sends messages when scheduled time arrives
-- Updates campaign status and tracking information
-- Handles errors and retry logic
-
-## 🚀 Deployment
-
-### Vercel Deployment
-
-1. **Push your code to GitHub**
-
-2. **Connect to Vercel**
-   - Visit [Vercel](https://vercel.com/)
-   - Import your GitHub repository
-   - Configure environment variables in Vercel dashboard
-
-3. **Environment Variables for Vercel**
-   ```env
-  DATABASE_URL=mongodb+srv://username:password@cluster.mongodb.net/whatsapp-manager
-  BETTER_AUTH_SECRET=your-production-secret
-  BETTER_AUTH_URL=https://your-app.vercel.app
-  WAHA_API_KEY=your-waha-api-key
-  WAHA_BASE_URL=http://your-waha-server:3000
-   ```
-
-4. **Deploy**
-   - Vercel will automatically build and deploy your application
-   - Your app will be available at `https://your-app.vercel.app`
-
-### DigitalOcean VPS Setup for Message Scheduler
-
-The message scheduler needs to run continuously on a server. Here's how to set it up on a DigitalOcean VPS:
-
-#### 1. Create a DigitalOcean Droplet
-
-[**Get $200 in credits with this referral link!**](https://m.do.co/c/ddd03661770c)
-
-- Choose Ubuntu 22.04 LTS
-- Select at least 1GB RAM droplet
-- Add your password (as its easier for beginners, but SSH keys are recommended)
-
-#### 2. Server Setup
+1. Clone o repositório:
 
 ```bash
-# Connect to your server
-ssh root@your-server-ip
-(enter your password or use your SSH key)
-
-# Update system
-apt update && apt upgrade -y
-
-# Install Node.js 18+
-curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
-apt-get install -y nodejs
-
-# Install pnpm
-npm install -g pnpm
-
-# Install PM2 for process management
-npm install -g pm2
+git clone https://github.com/elvisfalmeida/whatsapp-waha-dashboard.git
+cd whatsapp-waha-dashboard
 ```
 
-#### 3. Deploy Your Scheduler
+2. Instale as dependências:
 
 ```bash
-# Clone your repository
-git clone https://github.com/yourusername/whatsapp-group-manager.git
-cd whatsapp-group-manager
-
-# Install dependencies
 pnpm install
+```
 
-# Create production environment file
-nano .env.production
+3. Crie um arquivo `.env` na raiz:
 
-# Add your environment variables
-DATABASE_URL="your-mongodb-connection-string"
-WAHA_API_KEY="your-waha-api-key"
-WAHA_BASE_URL="http://your-waha-server:3000"
+```env
+DATABASE_URL="mongodb+srv://usuario:senha@cluster.mongodb.net/whatsapp-manager"
+WAHA_API_URL="https://sua-url-da-waha"
+WAHA_API_KEY="sua-chave-da-waha"
+BETTER_AUTH_SECRET="seu-secret-de-producao"
+BETTER_AUTH_URL="http://localhost:3000"
+MAILGUN_API_KEY="sua-chave-mailgun"
+MAILGUN_DOMAIN="seu-dominio-mailgun"
+FROM_EMAIL="noreply@seudominio.com"
+ADMIN_EMAIL="admin@seudominio.com"
+ADMIN_PHONE_NUMBER="+5511999999999"
+NEXT_PUBLIC_SHOW_FOOTER="true"
+```
 
-# Generate Prisma client
+4. Gere o client do Prisma:
+
+```bash
 pnpm prisma:generate
+```
 
-# Start the scheduler with PM2
-pm2 start src/scripts/messageScheduler.ts \
-  --interpreter ./node_modules/.bin/tsx \
-  --name whatsapp-scheduler \
-  --env production
+5. Envie o schema para o banco:
 
-# Save PM2 configuration
+```bash
+pnpm db:push
+```
+
+6. Rode o projeto:
+
+```bash
+pnpm dev
+```
+
+A aplicação ficará disponível em `http://localhost:3000`.
+
+## Deploy na Vercel
+
+A Vercel hospeda o dashboard Next.js. O banco MongoDB, o servidor WAHA e o scheduler precisam existir fora da Vercel.
+
+1. Envie o código para o GitHub.
+2. Importe o repositório na Vercel.
+3. Configure as variáveis de ambiente no painel da Vercel.
+4. Faça o deploy.
+
+Variáveis principais:
+
+```env
+DATABASE_URL="mongodb+srv://usuario:senha@cluster.mongodb.net/whatsapp-manager"
+BETTER_AUTH_SECRET="seu-secret-de-producao"
+BETTER_AUTH_URL="https://seu-app.vercel.app"
+WAHA_API_URL="https://sua-url-da-waha"
+WAHA_API_KEY="sua-chave-da-waha"
+MAILGUN_API_KEY="sua-chave-mailgun"
+MAILGUN_DOMAIN="seu-dominio-mailgun"
+FROM_EMAIL="noreply@seudominio.com"
+ADMIN_EMAIL="admin@seudominio.com"
+ADMIN_PHONE_NUMBER="+5511999999999"
+```
+
+## Agendador
+
+O scheduler precisa rodar continuamente, então ele deve ficar em um servidor separado, VPS ou no mesmo servidor onde a WAHA está rodando.
+
+Exemplo com PM2:
+
+```bash
+pnpm install
+pnpm prisma:generate
+pm2 start src/scripts/messageScheduler.ts --interpreter ./node_modules/.bin/tsx --name whatsapp-scheduler --env production
 pm2 save
 pm2 startup
 ```
 
-#### 4. Monitor Your Scheduler
+Comandos úteis:
 
 ```bash
-# Check status
 pm2 status
-
-# View logs
 pm2 logs whatsapp-scheduler
-
-# Restart if needed
 pm2 restart whatsapp-scheduler
 ```
 
-## 🔧 Environment Variables
-
-| Variable | Description | Required |
-|----------|-------------|----------|
-| `DATABASE_URL` | MongoDB connection string | ✅ |
-| `BETTER_AUTH_SECRET` | Secret key for Better Auth | ✅ |
-| `BETTER_AUTH_URL` | Base URL for your application | ✅ |
-| `WAHA_API_KEY` | API key for WhatsApp API | ✅ |
-| `WAHA_API_URL` | Base URL for WAHA server | ✅ |
-| `MAILGUN_API_KEY` | Mailgun API key for sending emails | ✅ |
-| `MAILGUN_DOMAIN` | Mailgun domain for sending emails | ✅ |
-| `FROM_EMAIL` | Email address to send from | ✅ |
-| `ADMIN_EMAIL` | Admin email for notifications | ✅ |
-| `ADMIN_PHONE_NUMBER` | Admin phone number for WhatsApp notifications | ❌ |
-
-## 📝 Available Scripts
+## Scripts
 
 ```bash
-# Development
-pnpm dev                    # Start development server
-pnpm build                  # Build for production (includes Prisma push & generate)
-pnpm start                  # Start production server
-pnpm preview               # Build and start in preview mode
-
-# Database
-pnpm db:push               # Push schema to database
-pnpm db:studio             # Open Prisma Studio
-pnpm prisma:generate       # Generate Prisma client
-
-# Message Scheduler
-pnpm scheduler:start       # Start message scheduler locally
-
-# Code Quality
-pnpm lint                  # Run ESLint
-pnpm lint:fix             # Fix ESLint issues
-pnpm typecheck            # Run TypeScript check
-pnpm check                 # Run lint and typecheck together
-pnpm format:check         # Check code formatting
-pnpm format:write         # Format code with Prettier
+pnpm dev
+pnpm build
+pnpm start
+pnpm db:push
+pnpm prisma:generate
+pnpm scheduler:start
+pnpm typecheck
+pnpm lint
 ```
 
-## 🏗️ Project Structure
+## Estrutura
 
-```
+```text
+prisma/
+  schema.prisma
 src/
-├── app/                   # Next.js app directory
-│   ├── _components/       # Reusable components
-│   │   ├── auth/          # Authentication components
-│   │   └── whatsapp/      # WhatsApp-related components
-│   ├── api/              # API routes
-│   ├── auth/             # Authentication pages
-│   └── admin/            # Admin dashboard
-├── client/               # Client-side auth configuration
-├── scripts/              # Background scripts
-│   └── messageScheduler.ts # Message scheduling service
-├── server/               # Server-side code
-│   ├── api/              # tRPC routers
-│   │   └── routers/      # Individual route handlers
-│   ├── auth.ts           # Authentication config
-│   ├── db.ts             # Database connection
-│   ├── mailgun.ts        # Email service integration
-│   └── user-service.ts   # User management service
-├── styles/               # Global styles
-├── trpc/                 # tRPC configuration
-└── types/                # TypeScript type definitions
+  app/
+  app/_components/
+  app/admin/
+  app/api/
+  client/
+  scripts/messageScheduler.ts
+  server/
+  styles/
+  trpc/
+  types/
 ```
 
-## 🤝 Contributing
+## Observações
 
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add some amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
-
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 👨‍💻 Author
-
-**Aaron Nazareth**
-
-- 🐙 GitHub: [@jevil25](https://github.com/jevil25)
-- 📺 YouTube: [@JevilCodes](https://youtube.com/@JevilCodes)
-- 🐦 X: [@jevil257](https://x.com/jevil257)
-
----
-
-<div align="center">
-  Made with ❤️ by Aaron Nazareth
-</div>
-
+- O dashboard pode rodar na Vercel.
+- O MongoDB deve ser externo, como MongoDB Atlas.
+- A WAHA deve ficar em um servidor com URL pública.
+- O scheduler não deve depender de um processo contínuo dentro da Vercel.

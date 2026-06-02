@@ -40,14 +40,14 @@ export const messageCampaignRouter = createTRPCRouter({
       const timeRegex = new RegExp(/^(\d{1,2}):(\d{2})$/);
       const timeMatch = timeRegex.exec(messageTime);
       if (!timeMatch?.[1] || !timeMatch?.[2]) {
-        throw new Error("Invalid time format");
+        throw new Error("Formato de horário inválido");
       }
 
       const hours = parseInt(timeMatch[1], 10);
       const minutes = parseInt(timeMatch[2], 10);
 
       if (hours < 0 || hours > 23 || minutes < 0 || minutes > 59) {
-        throw new Error("Invalid time values");
+        throw new Error("Valores de horário inválidos");
       }
 
       const startDt = DateTime.fromISO(startDate, { zone: timeZone })
@@ -57,11 +57,11 @@ export const messageCampaignRouter = createTRPCRouter({
         .set({ hour: hours, minute: minutes, second: 0, millisecond: 0 });
 
       if (!startDt.isValid || !endDt.isValid) {
-        throw new Error("Invalid date format");
+        throw new Error("Formato de data inválido");
       }
 
       if (endDt < startDt) {
-        throw new Error("End date must be after start date");
+        throw new Error("A data final deve ser posterior à data inicial");
       }
 
       const messages = [];
@@ -84,9 +84,9 @@ export const messageCampaignRouter = createTRPCRouter({
         
         if (messageSequence.length !== requiredMessageCount) {
           throw new Error(
-            `For the selected date range and ${recurrence.toLowerCase()} recurrence, ` +
-            `you need exactly ${requiredMessageCount} unique message${requiredMessageCount > 1 ? 's' : ''} ` +
-            `separated by asterisks (*). Or remove the asterisks to use the same message for all occurrences.`
+            `Para o intervalo de datas e a recorrência selecionados, ` +
+            `você precisa informar exatamente ${requiredMessageCount} mensagem${requiredMessageCount > 1 ? 's' : ''} única${requiredMessageCount > 1 ? 's' : ''} ` +
+            `separada${requiredMessageCount > 1 ? 's' : ''} por asteriscos (*). Ou remova os asteriscos para usar a mesma mensagem em todos os envios.`
           );
         }
       }
@@ -108,14 +108,14 @@ export const messageCampaignRouter = createTRPCRouter({
         // Add title if provided
         if (!input.isFreeForm) {
           if (title) {
-            messageContent += `Campaign Title: ${title}\n`;
+            messageContent += `Título da campanha: ${title}\n`;
           }
           
-          messageContent += `Campaign Start Date: ${startDt.toFormat('yyyy-LL-dd')}\n`;
-          messageContent += `Campaign End Date: ${endDt.toFormat('yyyy-LL-dd')}\n`;
+          messageContent += `Data inicial da campanha: ${startDt.toFormat('yyyy-LL-dd')}\n`;
+          messageContent += `Data final da campanha: ${endDt.toFormat('yyyy-LL-dd')}\n`;
           
           if (targetAmount) {
-            messageContent += `Contribution Target Amount: ${targetAmount}\n`;
+            messageContent += `Meta de contribuição: ${targetAmount}\n`;
           }
           
           messageContent += `Days Remaining: ${daysLeft}\n\n`;
@@ -244,7 +244,7 @@ export const messageCampaignRouter = createTRPCRouter({
         return campaigns.filter(campaign => campaign.group !== null);
       } catch (error) {
         console.error('Error fetching completed campaigns:', error);
-        throw new Error('Failed to fetch completed campaigns');
+        throw new Error('Não foi possível buscar campanhas concluídas');
       }
     }),
 
@@ -308,7 +308,7 @@ export const messageCampaignRouter = createTRPCRouter({
         return campaigns.filter(campaign => campaign.group !== null);
       } catch (error) {
         console.error('Error fetching campaigns:', error);
-        throw new Error('Failed to fetch campaigns');
+        throw new Error('Não foi possível buscar campanhas');
       }
     }),
 
@@ -370,14 +370,14 @@ export const messageCampaignRouter = createTRPCRouter({
       const timeRegex = new RegExp(/^(\d{1,2}):(\d{2})$/);
       const timeMatch = timeRegex.exec(messageTime);
       if (!timeMatch?.[1] || !timeMatch?.[2]) {
-        throw new Error("Invalid time format");
+        throw new Error("Formato de horário inválido");
       }
 
       const hours = parseInt(timeMatch[1], 10);
       const minutes = parseInt(timeMatch[2], 10);
 
       if (hours < 0 || hours > 23 || minutes < 0 || minutes > 59) {
-        throw new Error("Invalid time values");
+        throw new Error("Valores de horário inválidos");
       }
 
       // Check if campaign exists and belongs to user
@@ -396,13 +396,13 @@ export const messageCampaignRouter = createTRPCRouter({
       });
 
       if (!existingCampaign) {
-        throw new Error("Campaign not found or access denied");
+        throw new Error("Campanha não encontrada ou acesso negado");
       }
 
       // Check if any messages have already been sent - use optional chaining for safety
       const hasSentMessages = existingCampaign.messages?.some((m: any) => m.isSent) ?? false;
       if (hasSentMessages) {
-        throw new Error("Cannot edit campaign with messages that have already been sent");
+        throw new Error("Não é possível editar uma campanha com mensagens já enviadas");
       }
 
       const startDt = DateTime.fromISO(startDate, { zone: timeZone })
@@ -412,11 +412,11 @@ export const messageCampaignRouter = createTRPCRouter({
         .set({ hour: hours, minute: minutes, second: 0, millisecond: 0 });
 
       if (!startDt.isValid || !endDt.isValid) {
-        throw new Error("Invalid date format");
+        throw new Error("Formato de data inválido");
       }
 
       if (endDt < startDt) {
-        throw new Error("End date must be after start date");
+        throw new Error("A data final deve ser posterior à data inicial");
       }
 
       const sendTimeUtc = startDt.toUTC().toJSDate();
@@ -437,9 +437,9 @@ export const messageCampaignRouter = createTRPCRouter({
         
         if (messageSequence.length !== requiredMessageCount) {
           throw new Error(
-            `For the selected date range and ${recurrence.toLowerCase()} recurrence, ` +
-            `you need exactly ${requiredMessageCount} unique message${requiredMessageCount > 1 ? 's' : ''} ` +
-            `separated by asterisks (*). Or remove the asterisks to use the same message for all occurrences.`
+            `Para o intervalo de datas e a recorrência selecionados, ` +
+            `você precisa informar exatamente ${requiredMessageCount} mensagem${requiredMessageCount > 1 ? 's' : ''} única${requiredMessageCount > 1 ? 's' : ''} ` +
+            `separada${requiredMessageCount > 1 ? 's' : ''} por asteriscos (*). Ou remova os asteriscos para usar a mesma mensagem em todos os envios.`
           );
         }
       }
@@ -462,14 +462,14 @@ export const messageCampaignRouter = createTRPCRouter({
         
         if (!input.isFreeForm) {
           if (title?.trim()) {
-            messageContent += `Campaign Title: ${title}\n`;
+            messageContent += `Título da campanha: ${title}\n`;
           }
           
-          messageContent += `Campaign Start Date: ${startDate}\n`;
-          messageContent += `Campaign End Date: ${endDate}\n`;
+          messageContent += `Data inicial da campanha: ${startDate}\n`;
+          messageContent += `Data final da campanha: ${endDate}\n`;
           
           if (targetAmount?.trim()) {
-            messageContent += `Contribution Target Amount: ${targetAmount}\n`;
+            messageContent += `Meta de contribuição: ${targetAmount}\n`;
           }
           
           messageContent += `Days Remaining: ${daysLeft}\n\n`;

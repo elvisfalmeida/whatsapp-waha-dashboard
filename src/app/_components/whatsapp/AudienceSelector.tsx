@@ -221,7 +221,7 @@ export function AudienceSelector({
       {/* Audience Type Selection */}
       <div>
         <label htmlFor="audienceType" className="block text-sm font-medium text-gray-700 mb-2">
-          Audience Type
+          Tipo de público
         </label>
         <select
           id="audienceType"
@@ -229,8 +229,8 @@ export function AudienceSelector({
           onChange={(e) => handleAudienceTypeChange(e.target.value as 'groups' | 'individuals')}
           className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#008069]"
         >
-          <option value="groups">Groups</option>
-          <option value="individuals">Individuals</option>
+          <option value="groups">Grupos</option>
+          <option value="individuals">Contatos individuais</option>
         </select>
       </div>
 
@@ -245,18 +245,18 @@ export function AudienceSelector({
               {selectedAudienceType === 'groups' ? (
                 currentSelectedGroups.length > 0 ? (
                   <span className="text-gray-900">
-                    {currentSelectedGroups.length} group{currentSelectedGroups.length > 1 ? 's' : ''} selected
+                    {currentSelectedGroups.length} grupo{currentSelectedGroups.length > 1 ? 's' : ''} selecionado{currentSelectedGroups.length > 1 ? 's' : ''}
                   </span>
                 ) : (
-                  <span className="text-gray-500">Choose groups...</span>
+                  <span className="text-gray-500">Escolha os grupos...</span>
                 )
               ) : (
                 selectedContactsState.length > 0 ? (
                   <span className="text-gray-900">
-                    {selectedContactsState.length} contact{selectedContactsState.length > 1 ? 's' : ''} selected
+                    {selectedContactsState.length} contato{selectedContactsState.length > 1 ? 's' : ''} selecionado{selectedContactsState.length > 1 ? 's' : ''}
                   </span>
                 ) : (
-                  <span className="text-gray-500">Choose contacts (max 15)...</span>
+                  <span className="text-gray-500">Escolha os contatos (máx. 15)...</span>
                 )
               )}
             </div>
@@ -279,7 +279,7 @@ export function AudienceSelector({
                           handleSearch();
                         }
                       }}
-                      placeholder={selectedAudienceType === 'groups' ? "Search groups..." : "Search contacts..."}
+                      placeholder={selectedAudienceType === 'groups' ? "Buscar grupos..." : "Buscar contatos..."}
                       className="w-full pl-10 pr-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#00a884] focus:border-[#00a884]"
                     />
                     <svg 
@@ -299,7 +299,7 @@ export function AudienceSelector({
                     {isLoading ? (
                       <>
                         <div className="animate-spin rounded-full h-4 w-4 border-2 border-white border-t-transparent" />
-                        <span>Searching...</span>
+                        <span>Buscando...</span>
                       </>
                     ) : (
                       <>
@@ -311,7 +311,7 @@ export function AudienceSelector({
                         >
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                         </svg>
-                        <span>Search</span>
+                        <span>Buscar</span>
                       </>
                     )}
                   </button>
@@ -328,7 +328,7 @@ export function AudienceSelector({
                     <div className="flex flex-col items-center space-y-2">
                       <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#00a884]" />
                       <span className="text-sm text-gray-500">
-                        {selectedAudienceType === 'groups' ? 'Searching groups...' : 'Searching contacts...'}
+                        {selectedAudienceType === 'groups' ? 'Buscando grupos...' : 'Buscando contatos...'}
                       </span>
                     </div>
                   </div>
@@ -344,14 +344,14 @@ export function AudienceSelector({
                       >
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
                       </svg>
-                      <h3 className="mt-2 text-sm font-medium text-gray-900">Search for WhatsApp Groups</h3>
+                      <h3 className="mt-2 text-sm font-medium text-gray-900">Buscar grupos do WhatsApp</h3>
                       <p className="mt-1 text-sm text-gray-500">
-                        Enter a search term and click search to find your WhatsApp groups
+                        Digite um termo e clique em buscar para encontrar seus grupos do WhatsApp
                       </p>
                     </div>
                   ) : allGroups.length === 0 ? (
                     <div className="py-3 px-4 text-sm text-gray-500 text-center">
-                      No groups found matching your search
+                      Nenhum grupo encontrado para a busca
                     </div>
                   ) : (
                     <>
@@ -384,7 +384,7 @@ export function AudienceSelector({
                         <div className="flex items-center justify-center py-3">
                           <div className="flex items-center space-x-2">
                             <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-[#00a884]" />
-                            <span className="text-sm text-gray-500">Loading more groups...</span>
+                              <span className="text-sm text-gray-500">Carregando mais grupos...</span>
                           </div>
                         </div>
                       )}
@@ -392,13 +392,13 @@ export function AudienceSelector({
                         <div className="p-4 border-t border-gray-200">
                           <div className="flex justify-between items-center mb-2">
                             <span className="text-sm font-medium text-gray-700">
-                              {selectedGroupsState.length} group{selectedGroupsState.length > 1 ? 's' : ''} selected
+                              {selectedGroupsState.length} grupo{selectedGroupsState.length > 1 ? 's' : ''} selecionado{selectedGroupsState.length > 1 ? 's' : ''}
                             </span>
                             <button
                               onClick={handleConfirmSelection}
                               className="px-3 py-1 bg-[#00a884] text-white text-sm rounded-md hover:bg-[#008f6c] transition-colors"
                             >
-                              Confirm Selection
+                              Confirmar seleção
                             </button>
                           </div>
                         </div>
@@ -417,14 +417,14 @@ export function AudienceSelector({
                       >
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                       </svg>
-                      <h3 className="mt-2 text-sm font-medium text-gray-900">Search for WhatsApp Contacts</h3>
+                      <h3 className="mt-2 text-sm font-medium text-gray-900">Buscar contatos do WhatsApp</h3>
                       <p className="mt-1 text-sm text-gray-500">
-                        Enter a search term and click search to find your WhatsApp contacts
+                        Digite um termo e clique em buscar para encontrar seus contatos do WhatsApp
                       </p>
                     </div>
                   ) : mergedContacts.length === 0 ? (
                     <div className="py-3 px-4 text-sm text-gray-500 text-center">
-                      No contacts found matching your search
+                      Nenhum contato encontrado para a busca
                     </div>
                   ) : (
                     <>
@@ -462,7 +462,7 @@ export function AudienceSelector({
                         <div className="flex items-center justify-center py-3">
                           <div className="flex items-center space-x-2">
                             <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-[#00a884]" />
-                            <span className="text-sm text-gray-500">Loading more contacts...</span>
+                            <span className="text-sm text-gray-500">Carregando mais contatos...</span>
                           </div>
                         </div>
                       )}
@@ -470,18 +470,18 @@ export function AudienceSelector({
                         <div className="p-4 border-t border-gray-200">
                           <div className="flex justify-between items-center mb-2">
                             <span className="text-sm font-medium text-gray-700">
-                              {selectedContactsState.length}/15 contacts selected
+                              {selectedContactsState.length}/15 contatos selecionados
                             </span>
                             <button
                               onClick={handleConfirmSelection}
                               className="px-3 py-1 bg-[#00a884] text-white text-sm rounded-md hover:bg-[#008f6c] transition-colors"
                             >
-                              Confirm Selection
+                              Confirmar seleção
                             </button>
                           </div>
                           {selectedContactsState.length >= 15 && (
                             <p className="text-xs text-amber-600">
-                              Maximum 15 contacts can be selected per message
+                              No máximo 15 contatos podem ser selecionados por mensagem
                             </p>
                           )}
                         </div>
@@ -506,11 +506,11 @@ export function AudienceSelector({
             </div>
             <div className="flex-1 min-w-0">
               <h4 className="text-lg font-medium text-gray-900 truncate">
-                {currentSelectedGroups.length} Group{currentSelectedGroups.length > 1 ? 's' : ''} Selected
+                {currentSelectedGroups.length} grupo{currentSelectedGroups.length > 1 ? 's' : ''} selecionado{currentSelectedGroups.length > 1 ? 's' : ''}
               </h4>
               <p className="mt-1 text-sm text-gray-500">
                 {currentSelectedGroups.slice(0, 3).map(g => g.groupName).join(', ')}
-                {currentSelectedGroups.length > 3 && ` and ${currentSelectedGroups.length - 3} more`}
+                {currentSelectedGroups.length > 3 && ` e mais ${currentSelectedGroups.length - 3}`}
               </p>
             </div>
           </div>
@@ -527,11 +527,11 @@ export function AudienceSelector({
             </div>
             <div className="flex-1 min-w-0">
               <h4 className="text-lg font-medium text-gray-900">
-                {selectedContactsState.length} Contact{selectedContactsState.length > 1 ? 's' : ''} Selected
+                {selectedContactsState.length} contato{selectedContactsState.length > 1 ? 's' : ''} selecionado{selectedContactsState.length > 1 ? 's' : ''}
               </h4>
               <div className="mt-1 text-sm text-gray-500">
                 {selectedContactsState.slice(0, 3).map(contact => contact.name).join(', ')}
-                {selectedContactsState.length > 3 && ` and ${selectedContactsState.length - 3} more`}
+                {selectedContactsState.length > 3 && ` e mais ${selectedContactsState.length - 3}`}
               </div>
             </div>
           </div>

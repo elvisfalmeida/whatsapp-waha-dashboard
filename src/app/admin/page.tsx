@@ -178,10 +178,10 @@ export default function AdminDashboard() {
           }
           setDeleteModalOpen(false);
         }}
-        title="Delete User"
-        message="Are you sure you want to delete this user? This action cannot be undone."
-        confirmText="Delete"
-        cancelText="Cancel"
+        title="Excluir usuário"
+        message="Tem certeza de que deseja excluir este usuário? Esta ação não pode ser desfeita."
+        confirmText="Excluir"
+        cancelText="Cancelar"
       />
 
       <div className="bg-[#008069] text-white px-4 py-3 flex justify-between items-center">
@@ -190,15 +190,15 @@ export default function AdminDashboard() {
             onClick={() => router.push('/')}
             className="text-sm bg-[#ffffff1a] px-3 py-1.5 rounded-md hover:bg-[#ffffff33] transition-colors"
           >
-            Back
+            Voltar
           </button>
-          <h1 className="text-xl font-medium">Admin Dashboard</h1>
+          <h1 className="text-xl font-medium">Painel administrativo</h1>
         </div>
         <button
           onClick={handleSignOut}
           className="text-sm bg-[#ffffff1a] px-3 py-1.5 rounded-md hover:bg-[#ffffff33] transition-colors"
         >
-          Sign out
+          Sair
         </button>
       </div>
 
@@ -206,10 +206,10 @@ export default function AdminDashboard() {
         <div className="space-y-6">
           {/* WhatsApp Integration Section */}
           <div className="bg-white rounded-lg shadow-sm p-6">
-            <h2 className="text-xl font-medium mb-4">WhatsApp Integration</h2>
+            <h2 className="text-xl font-medium mb-4">Integração com WhatsApp</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="bg-[#f0f2f5] p-4 rounded-lg">
-                <h3 className="text-lg font-medium mb-2">Active Sessions</h3>
+                <h3 className="text-lg font-medium mb-2">Sessões ativas</h3>
                 {isWhatsAppSessionsLoading ? (
                   <div className="animate-pulse space-y-2">
                     {[1, 2].map((i) => (
@@ -226,20 +226,20 @@ export default function AdminDashboard() {
                       <div key={session.id} className="bg-white p-3 rounded">
                         <p className="font-medium">{session.sessionName}</p>
                         <p className="text-sm text-gray-500">{session.phoneNumber}</p>
-                        <p className="text-xs text-gray-400">{session.WhatsAppGroups.length} groups</p>
+                        <p className="text-xs text-gray-400">{session.WhatsAppGroups.length} grupos</p>
                       </div>
                     ))}
                   </div>
                 ) : (
                   <div className="bg-white p-4 rounded text-center">
-                    <p className="text-sm text-gray-500 mb-2">No active sessions</p>
-                    <p className="text-xs text-gray-400">Add a WhatsApp session to get started</p>
+                    <p className="text-sm text-gray-500 mb-2">Nenhuma sessão ativa</p>
+                    <p className="text-xs text-gray-400">Adicione uma sessão do WhatsApp para começar</p>
                   </div>
                 )}
               </div>
 
               <div className="bg-[#f0f2f5] p-4 rounded-lg">
-                <h3 className="text-lg font-medium mb-2">Connected Groups</h3>
+                <h3 className="text-lg font-medium mb-2">Grupos conectados</h3>
                 {isWhatsAppGroupsLoading ? (
                   <div className="animate-pulse space-y-2">
                     {[1, 2].map((i) => (
@@ -254,20 +254,20 @@ export default function AdminDashboard() {
                     {whatsAppGroups.map((group) => (
                       <div key={group.id} className="bg-white p-3 rounded">
                         <p className="font-medium">{group.groupName}</p>
-                        <p className="text-xs text-gray-400">{group.campaigns.length} active campaigns</p>
+                        <p className="text-xs text-gray-400">{group.campaigns.length} campanhas ativas</p>
                       </div>
                     ))}
                   </div>
                 ) : (
                   <div className="bg-white p-4 rounded text-center">
-                    <p className="text-sm text-gray-500 mb-2">No connected groups</p>
-                    <p className="text-xs text-gray-400">Connect to a WhatsApp group to begin</p>
+                    <p className="text-sm text-gray-500 mb-2">Nenhum grupo conectado</p>
+                    <p className="text-xs text-gray-400">Conecte um grupo do WhatsApp para começar</p>
                   </div>
                 )}
               </div>
 
               <div className="bg-[#f0f2f5] p-4 rounded-lg">
-                <h3 className="text-lg font-medium mb-2">Active Campaigns</h3>
+                <h3 className="text-lg font-medium mb-2">Campanhas ativas</h3>
                 {isActiveCampaignsLoading ? (
                   <div className="animate-pulse space-y-2">
                     {[1, 2].map((i) => (
@@ -295,15 +295,15 @@ export default function AdminDashboard() {
                           </span>
                         </div>
                         <p className="text-sm text-gray-500">
-                          Starts: {new Date(campaign.startDate).toLocaleDateString()}
+                          Início: {new Date(campaign.startDate).toLocaleDateString('pt-BR')}
                         </p>
                       </div>
                     ))}
                   </div>
                 ) : (
                   <div className="bg-white p-4 rounded text-center">
-                    <p className="text-sm text-gray-500 mb-2">No active campaigns</p>
-                    <p className="text-xs text-gray-400">Create a campaign to start messaging</p>
+                    <p className="text-sm text-gray-500 mb-2">Nenhuma campanha ativa</p>
+                    <p className="text-xs text-gray-400">Crie uma campanha para começar a enviar mensagens</p>
                   </div>
                 )}
               </div>
@@ -313,7 +313,7 @@ export default function AdminDashboard() {
           {/* User Management Sections - updated to be more compact */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="bg-white rounded-lg shadow-sm p-6">
-              <h2 className="text-xl font-medium mb-4">Pending Users</h2>
+              <h2 className="text-xl font-medium mb-4">Usuários pendentes</h2>
               <div className="space-y-4">
                 {isPendingUsersLoading ? (
                   <div className="animate-pulse space-y-4">
@@ -342,18 +342,18 @@ export default function AdminDashboard() {
                         disabled={approvingUsers.has(user.id)}
                         className="text-sm bg-[#008069] text-white px-3 py-1.5 rounded-md hover:bg-[#006d5a] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                       >
-                        {approvingUsers.has(user.id) ? 'Approving...' : 'Approve'}
+                        {approvingUsers.has(user.id) ? 'Aprovando...' : 'Aprovar'}
                       </button>
                     </div>
                   ))
                 ) : (
-                  <p className="text-gray-500 text-sm">No pending users</p>
+                  <p className="text-gray-500 text-sm">Nenhum usuário pendente</p>
                 )}
               </div>
             </div>
 
             <div className="bg-white rounded-lg shadow-sm p-6">
-              <h2 className="text-xl font-medium mb-4">Add New User</h2>
+              <h2 className="text-xl font-medium mb-4">Adicionar novo usuário</h2>
               <form 
                 onSubmit={(e) => {
                   e.preventDefault();
@@ -369,7 +369,7 @@ export default function AdminDashboard() {
               >
                 <div>
                   <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
-                    Name
+                    Nome
                   </label>
                   <input
                     type="text"
@@ -377,7 +377,7 @@ export default function AdminDashboard() {
                     value={newUserName}
                     onChange={(e) => setNewUserName(e.target.value)}
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#008069] focus:border-transparent"
-                    placeholder="Enter name"
+                    placeholder="Informe o nome"
                     required
                   />
                 </div>
@@ -391,13 +391,13 @@ export default function AdminDashboard() {
                     value={newUserEmail}
                     onChange={(e) => setNewUserEmail(e.target.value)}
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#008069] focus:border-transparent"
-                    placeholder="Enter email"
+                    placeholder="Informe o email"
                     required
                   />
                 </div>
                 <div>
                   <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">
-                    Password
+                    Senha
                   </label>
                   <input
                     type="password"
@@ -405,7 +405,7 @@ export default function AdminDashboard() {
                     value={newUserPassword}
                     onChange={(e) => setNewUserPassword(e.target.value)}
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#008069] focus:border-transparent"
-                    placeholder="Enter password"
+                    placeholder="Informe a senha"
                     required
                     minLength={8}
                   />
@@ -418,14 +418,14 @@ export default function AdminDashboard() {
                   disabled={isAddingUser}
                   className="w-full bg-[#008069] text-white px-4 py-2 rounded-md hover:bg-[#006d5a] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  {isAddingUser ? 'Adding User...' : 'Add User'}
+                  {isAddingUser ? 'Adicionando usuário...' : 'Adicionar usuário'}
                 </button>
               </form>
             </div>
           </div>
 
           <div className="bg-white rounded-lg shadow-sm p-6">
-            <h2 className="text-xl font-medium mb-4">Approved Users</h2>
+            <h2 className="text-xl font-medium mb-4">Usuários aprovados</h2>
             {(errors.makeAdmin ?? errors.revokeAccess ?? errors.deleteUser) && (
               <div className="mb-4 p-4 bg-red-50 border border-red-200 rounded-lg">
                 {errors.makeAdmin && <p className="text-sm text-red-600">{errors.makeAdmin}</p>}
@@ -455,7 +455,7 @@ export default function AdminDashboard() {
                           <p className="text-sm text-gray-500">{user.email}</p>
                         </div>
                         {user.role === 'ADMIN' && (
-                          <span className="text-xs bg-[#008069] text-white px-2 py-0.5 rounded">Admin</span>
+                          <span className="text-xs bg-[#008069] text-white px-2 py-0.5 rounded">Administrador</span>
                         )}
                       </div>
                       {user.role !== 'ADMIN' && (
@@ -478,7 +478,7 @@ export default function AdminDashboard() {
                             disabled={revokingUsers.has(user.id)}
                             className="text-xs bg-[#ffa500] text-white px-2 py-1 rounded hover:bg-[#ff8c00] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                           >
-                            {revokingUsers.has(user.id) ? '...' : 'Revoke'}
+                            {revokingUsers.has(user.id) ? '...' : 'Revogar'}
                           </button>
                           <button
                             onClick={() => {
@@ -488,7 +488,7 @@ export default function AdminDashboard() {
                             disabled={deletingUsers.has(user.id)}
                             className="text-xs bg-[#dc3545] text-white px-2 py-1 rounded hover:bg-[#c82333] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                           >
-                            {deletingUsers.has(user.id) ? '...' : 'Delete'}
+                            {deletingUsers.has(user.id) ? '...' : 'Excluir'}
                           </button>
                         </div>
                       )}
@@ -496,7 +496,7 @@ export default function AdminDashboard() {
                   </div>
                 ))
               ) : (
-                <p className="text-gray-500 text-sm">No approved users</p>
+                <p className="text-gray-500 text-sm">Nenhum usuário aprovado</p>
               )}
             </div>
           </div>

@@ -20,7 +20,7 @@ export default function ResetPasswordForm() {
     if (tokenParam) {
       setToken(tokenParam);
     } else {
-      setError("Invalid or missing reset token.");
+      setError("Token de redefinição inválido ou ausente.");
     }
   }, [searchParams]);
 
@@ -31,19 +31,19 @@ export default function ResetPasswordForm() {
     setError("");
 
     if (password !== confirmPassword) {
-      setError("Passwords do not match.");
+      setError("As senhas não conferem.");
       setIsLoading(false);
       return;
     }
 
     if (password.length < 8) {
-      setError("Password must be at least 8 characters long.");
+      setError("A senha deve ter pelo menos 8 caracteres.");
       setIsLoading(false);
       return;
     }
 
     if (!token) {
-      setError("Invalid or missing reset token.");
+      setError("Token de redefinição inválido ou ausente.");
       setIsLoading(false);
       return;
     }
@@ -54,15 +54,15 @@ export default function ResetPasswordForm() {
         token: token,
       });
 
-      setMessage("Your password has been reset successfully!");
+      setMessage("Sua senha foi redefinida com sucesso!");
       
       // Redirect to login page after 2 seconds
       setTimeout(() => {
         router.push("/auth");
       }, 2000);
     } catch (err) {
-      console.error("Reset password error:", err);
-      setError("Failed to reset password. The token may be invalid or expired.");
+      console.error("Erro ao redefinir senha:", err);
+      setError("Não foi possível redefinir a senha. O token pode estar inválido ou expirado.");
     } finally {
       setIsLoading(false);
     }
@@ -73,7 +73,7 @@ export default function ResetPasswordForm() {
       <div className="w-full max-w-md">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-600 mx-auto"></div>
-          <p className="mt-4 text-sm text-gray-600">Loading...</p>
+          <p className="mt-4 text-sm text-gray-600">Carregando...</p>
         </div>
       </div>
     );
@@ -84,10 +84,10 @@ export default function ResetPasswordForm() {
       <form onSubmit={handleSubmit} className="space-y-6">
         <div>
           <h2 className="text-center text-3xl font-bold tracking-tight text-gray-900">
-            Set new password
+            Definir nova senha
           </h2>
           <p className="mt-2 text-center text-sm text-gray-600">
-            Enter your new password below.
+            Informe sua nova senha abaixo.
           </p>
         </div>
 
@@ -110,7 +110,7 @@ export default function ResetPasswordForm() {
               <div className="ml-3">
                 <p className="text-sm font-medium text-green-800">{message}</p>
                 <p className="text-sm text-green-700 mt-1">
-                  Redirecting to login page...
+                  Redirecionando para a página de login...
                 </p>
               </div>
             </div>
@@ -144,7 +144,7 @@ export default function ResetPasswordForm() {
           <>
             <div>
               <label htmlFor="password" className="block text-sm font-medium text-gray-700">
-                New Password
+                Nova senha
               </label>
               <div className="mt-1">
                 <input
@@ -156,19 +156,19 @@ export default function ResetPasswordForm() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   className="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-green-500 focus:outline-none focus:ring-green-500 sm:text-sm"
-                  placeholder="Enter new password"
+                  placeholder="Informe a nova senha"
                   disabled={isLoading}
                   minLength={8}
                 />
               </div>
               <p className="mt-1 text-xs text-gray-500">
-                Password must be at least 8 characters long.
+                A senha deve ter pelo menos 8 caracteres.
               </p>
             </div>
 
             <div>
               <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700">
-                Confirm Password
+                Confirmar senha
               </label>
               <div className="mt-1">
                 <input
@@ -180,7 +180,7 @@ export default function ResetPasswordForm() {
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
                   className="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-green-500 focus:outline-none focus:ring-green-500 sm:text-sm"
-                  placeholder="Confirm new password"
+                  placeholder="Confirme a nova senha"
                   disabled={isLoading}
                   minLength={8}
                 />
@@ -188,7 +188,7 @@ export default function ResetPasswordForm() {
             </div>
 
             {password && confirmPassword && password !== confirmPassword && (
-              <p className="text-sm text-red-600">Passwords do not match.</p>
+              <p className="text-sm text-red-600">As senhas não conferem.</p>
             )}
 
             <div>
@@ -219,10 +219,10 @@ export default function ResetPasswordForm() {
                         d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
                       ></path>
                     </svg>
-                    Resetting...
+                    Redefinindo...
                   </>
                 ) : (
-                  "Reset password"
+                  "Redefinir senha"
                 )}
               </button>
             </div>
@@ -234,7 +234,7 @@ export default function ResetPasswordForm() {
             href="/auth"
             className="text-sm text-green-600 hover:text-green-500"
           >
-            ← Back to sign in
+            ← Voltar para o login
           </a>
         </div>
       </form>

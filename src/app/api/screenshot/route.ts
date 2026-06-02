@@ -6,7 +6,7 @@ export async function GET(request: Request) {
   const session = searchParams.get('session');
 
   if (!session) {
-    return new NextResponse('Session parameter is required', { status: 400 });
+    return new NextResponse('O parâmetro da sessão é obrigatório', { status: 400 });
   }
 
   try {
@@ -19,7 +19,7 @@ export async function GET(request: Request) {
     });
 
     if (!response.ok) {
-      throw new Error(`Screenshot request failed: ${response.statusText}`);
+      throw new Error(`Falha na solicitação da captura de tela: ${response.statusText}`);
     }
 
     const imageBuffer = await response.arrayBuffer();
@@ -31,6 +31,6 @@ export async function GET(request: Request) {
     });
   } catch (error) {
     console.error('Screenshot fetch error:', error);
-    return new NextResponse('Failed to fetch screenshot', { status: 500 });
+    return new NextResponse('Não foi possível buscar a captura de tela', { status: 500 });
   }
 }

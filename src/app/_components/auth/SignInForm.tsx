@@ -28,7 +28,7 @@ export function SignInForm() {
             router.push("/");
         }
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to sign in');
+      setError(err instanceof Error ? err.message : 'Não foi possível entrar');
     } finally {
       setLoading(false);
     }
@@ -54,7 +54,7 @@ export function SignInForm() {
 
       <div>
         <label htmlFor="password" className="block text-sm font-medium text-gray-700">
-          Password
+          Senha
         </label>
         <input
           id="password"
@@ -71,7 +71,7 @@ export function SignInForm() {
             href="/auth/forgot-password"
             className="text-sm text-blue-600 hover:text-blue-500"
           >
-            Forgot your password?
+            Esqueceu sua senha?
           </a>
         </div>
       </div>
@@ -87,7 +87,7 @@ export function SignInForm() {
         disabled={loading}
         className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
       >
-        {loading ? 'Signing in...' : 'Sign in'}
+        {loading ? 'Entrando...' : 'Entrar'}
       </button>
     </form>
   );

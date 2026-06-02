@@ -56,7 +56,7 @@ const enforceUserIsAdmin = t.middleware(({ ctx, next }) => {
 
 const enforceUserIsActive = t.middleware(({ ctx, next }) => {
   if (!ctx.session?.user || ctx.session.user.role === 'GUEST') {
-    throw new TRPCError({ code: "UNAUTHORIZED", message: "Your account is not yet approved" });
+    throw new TRPCError({ code: "UNAUTHORIZED", message: "Sua conta ainda não foi aprovada" });
   }
   return next({
     ctx: {

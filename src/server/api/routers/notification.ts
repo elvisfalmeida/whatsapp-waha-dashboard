@@ -18,12 +18,12 @@ export const notificationRouter = createTRPCRouter({
           errors: result.errors,
         };
       } catch (error) {
-        console.error("Failed to notify admin of user registration:", error);
+        console.error("Falha ao notificar administrador sobre cadastro de usuário:", error);
         return {
           success: false,
           whatsappSent: false,
           emailSent: false,
-          errors: [error instanceof Error ? error.message : "Unknown error"],
+          errors: [error instanceof Error ? error.message : "Erro desconhecido"],
         };
       }
     }),

@@ -79,14 +79,14 @@ export const adminRouter = createTRPCRouter({
       if (!user) {
         throw new TRPCError({
           code: 'NOT_FOUND',
-          message: 'User not found',
+          message: 'Usuário não encontrado',
         });
       }
 
       if (user.role === 'ADMIN') {
         throw new TRPCError({
           code: 'FORBIDDEN',
-          message: "Cannot revoke admin's access",
+          message: "Não é possível revogar o acesso de um administrador",
         });
       }
 
@@ -111,14 +111,14 @@ export const adminRouter = createTRPCRouter({
       if (!user) {
         throw new TRPCError({
           code: 'NOT_FOUND',
-          message: 'User not found',
+          message: 'Usuário não encontrado',
         });
       }
 
       if (user.role === 'ADMIN') {
         throw new TRPCError({
           code: 'FORBIDDEN',
-          message: 'Cannot delete an admin user',
+          message: 'Não é possível excluir um usuário administrador',
         });
       }
 
@@ -145,7 +145,7 @@ export const adminRouter = createTRPCRouter({
       if (existingUser) {
         throw new TRPCError({
           code: 'BAD_REQUEST',
-          message: 'User with this email already exists',
+          message: 'Já existe um usuário com este email',
         });
       }
 
@@ -159,7 +159,7 @@ export const adminRouter = createTRPCRouter({
         if (!newUser.user) {
             throw new TRPCError({
             code: 'INTERNAL_SERVER_ERROR',
-            message: "Failed to create user",
+            message: "Não foi possível criar o usuário",
             });
         }
         await db.user.update({

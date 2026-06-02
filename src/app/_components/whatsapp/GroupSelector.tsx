@@ -85,7 +85,7 @@ export function GroupSelector({ sessionName, onGroupSelect, selectedGroupId }: G
               {selectedGroup ? (
                 <span className="text-gray-900">{selectedGroup.groupName}</span>
               ) : (
-                <span className="text-gray-500">Choose a group...</span>
+                <span className="text-gray-500">Escolha um grupo...</span>
               )}
             </div>
             <svg className={`w-5 h-5 text-gray-400 transition-transform duration-200 ${isOpen ? 'transform rotate-180' : ''}`} fill="currentColor" viewBox="0 0 20 20">
@@ -107,7 +107,7 @@ export function GroupSelector({ sessionName, onGroupSelect, selectedGroupId }: G
                           handleSearch();
                         }
                       }}
-                      placeholder="Search groups..."
+                      placeholder="Buscar grupos..."
                       className="w-full pl-10 pr-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#00a884] focus:border-[#00a884]"
                     />
                     <svg 
@@ -127,7 +127,7 @@ export function GroupSelector({ sessionName, onGroupSelect, selectedGroupId }: G
                     {isLoading ? (
                       <>
                         <div className="animate-spin rounded-full h-4 w-4 border-2 border-white" />
-                        <span>Searching...</span>
+                        <span>Buscando...</span>
                       </>
                     ) : (
                       <>
@@ -139,14 +139,14 @@ export function GroupSelector({ sessionName, onGroupSelect, selectedGroupId }: G
                         >
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                         </svg>
-                        <span>Search</span>
+                        <span>Buscar</span>
                       </>
                     )}
                   </button>
                 </div>
                 {process.env.NODE_ENV === 'development' && loadTime && (
                   <div className="mt-1 text-xs text-gray-500 text-right">
-                    Search time: {Math.round(loadTime)}ms
+                    Tempo de busca: {Math.round(loadTime)}ms
                   </div>
                 )}
               </div>
@@ -169,16 +169,16 @@ export function GroupSelector({ sessionName, onGroupSelect, selectedGroupId }: G
                     >
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
                     </svg>
-                    <h3 className="mt-2 text-sm font-medium text-gray-900">Search for WhatsApp Groups</h3>
+                    <h3 className="mt-2 text-sm font-medium text-gray-900">Buscar grupos do WhatsApp</h3>
                     <p className="mt-1 text-sm text-gray-500">
-                      Enter a search term and click search to find your WhatsApp groups
+                      Digite um termo e clique em buscar para encontrar seus grupos do WhatsApp
                     </p>
                   </div>
                 ) : allGroups.length === 0 ? (
                   <div className="py-3 px-4 text-sm text-gray-500 text-center">
-                    No groups found matching your search
+                    Nenhum grupo encontrado para a busca
                     {process.env.NODE_ENV === 'development' && loadTime && (
-                      <div className="text-xs mt-1">Search time: {Math.round(loadTime)}ms</div>
+                      <div className="text-xs mt-1">Tempo de busca: {Math.round(loadTime)}ms</div>
                     )}
                   </div>
                 ) : (

@@ -12,7 +12,7 @@ export function Auth() {
       <div className="w-full max-w-sm space-y-8">
         <div className="text-center">
           <h2 className="mt-6 text-3xl font-bold tracking-tight text-gray-900">
-            {isSignIn ? 'Sign in to your account' : 'Create your account'}
+            {isSignIn ? 'Entre na sua conta' : 'Crie sua conta'}
           </h2>
         </div>
 
@@ -24,7 +24,7 @@ export function Auth() {
             onClick={() => setIsSignIn(!isSignIn)}
             className="text-sm text-blue-600 hover:text-blue-500"
           >
-            {isSignIn ? "Don't have an account? Sign up" : 'Already have an account? Sign in'}
+            {isSignIn ? "Ainda não tem uma conta? Cadastre-se" : 'Já tem uma conta? Entrar'}
           </button>
         </div>
       </div>

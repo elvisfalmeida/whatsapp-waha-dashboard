@@ -47,29 +47,30 @@ export default function Home() {
 
   // Common time zones for the selector
   const timeZones = [
-    { value: 'America/New_York', label: 'Eastern Time (ET)' },
-    { value: 'America/Chicago', label: 'Central Time (CT)' },
-    { value: 'America/Denver', label: 'Mountain Time (MT)' },
-    { value: 'America/Los_Angeles', label: 'Pacific Time (PT)' },
-    { value: 'America/Anchorage', label: 'Alaska Time (AKT)' },
-    { value: 'Pacific/Honolulu', label: 'Hawaii Time (HST)' },
-    { value: 'Europe/London', label: 'GMT (London)' },
+    { value: 'America/Sao_Paulo', label: 'Horário de Brasília (BRT)' },
+    { value: 'America/New_York', label: 'Horário do Leste (ET)' },
+    { value: 'America/Chicago', label: 'Horário Central (CT)' },
+    { value: 'America/Denver', label: 'Horário das Montanhas (MT)' },
+    { value: 'America/Los_Angeles', label: 'Horário do Pacífico (PT)' },
+    { value: 'America/Anchorage', label: 'Horário do Alasca (AKT)' },
+    { value: 'Pacific/Honolulu', label: 'Horário do Havaí (HST)' },
+    { value: 'Europe/London', label: 'GMT (Londres)' },
     { value: 'Europe/Paris', label: 'CET (Paris)' },
-    { value: 'Europe/Berlin', label: 'CET (Berlin)' },
-    { value: 'Asia/Tokyo', label: 'JST (Tokyo)' },
-    { value: 'Asia/Shanghai', label: 'CST (Shanghai)' },
+    { value: 'Europe/Berlin', label: 'CET (Berlim)' },
+    { value: 'Asia/Tokyo', label: 'JST (Tóquio)' },
+    { value: 'Asia/Shanghai', label: 'CST (Xangai)' },
     { value: 'Asia/Kolkata', label: 'IST (Mumbai)' },
     { value: 'Australia/Sydney', label: 'AEDT (Sydney)' },
     { value: 'UTC', label: 'UTC' },
   ];
 
   const recurrenceOptions = [
-    { value: 'DAILY', label: 'Daily' },
-    { value: 'WEEKLY', label: 'Weekly' },
-    { value: 'SEMI_MONTHLY', label: 'Semi-Monthly (Twice per Month)' },
-    { value: 'MONTHLY', label: 'Monthly' },
-    { value: 'SEMI_ANNUALLY', label: 'Semi-Annually (Every 6 Months)' },
-    { value: 'ANNUALLY', label: 'Annually' },
+    { value: 'DAILY', label: 'Diária' },
+    { value: 'WEEKLY', label: 'Semanal' },
+    { value: 'SEMI_MONTHLY', label: 'Quinzenal (duas vezes por mês)' },
+    { value: 'MONTHLY', label: 'Mensal' },
+    { value: 'SEMI_ANNUALLY', label: 'Semestral (a cada 6 meses)' },
+    { value: 'ANNUALLY', label: 'Anual' },
   ];
 
   // State for editing campaigns
@@ -137,7 +138,7 @@ export default function Home() {
         setIsConnecting(false);
       }
     } catch {
-      setError('Failed to check session status');
+      setError('Não foi possível verificar o status da sessão');
       setIsConnecting(false);
     }
   }, [trpcUtils.user.getSessionStatus]);
@@ -249,18 +250,18 @@ export default function Home() {
     // Add title if provided
     if (!isFreeForm) {
       if (campaignTitle.trim()) {
-        preview += `Campaign Title: ${campaignTitle}\n`;
+        preview += `Título da campanha: ${campaignTitle}\n`;
       }
       
-      preview += `Campaign Start Date: ${startDate}\n`;
-      preview += `Campaign End Date: ${endDate}\n`;
+      preview += `Data de início da campanha: ${startDate}\n`;
+      preview += `Data de término da campanha: ${endDate}\n`;
       
       // Add target amount if provided
       if (targetAmount.trim()) {
-        preview += `Contribution Target Amount: ${targetAmount}\n`;
+        preview += `Meta de contribuição: ${targetAmount}\n`;
       }
       
-      preview += `Days Remaining: ${daysLeft}\n\n`;
+      preview += `Dias restantes: ${daysLeft}\n\n`;
     }
 
     if (messageTemplate.includes("*")){
@@ -290,7 +291,7 @@ export default function Home() {
     onError: (error) => {
       setSubmitStatus({
         type: 'error',
-        message: error.message || 'Failed to create message campaign'
+        message: error.message || 'Não foi possível criar a campanha'
       });
     },
   });
@@ -299,7 +300,7 @@ export default function Home() {
     onSuccess: () => {
       setSubmitStatus({
         type: 'success',
-        message: 'Message campaign updated successfully!'
+        message: 'Campanha atualizada com sucesso!'
       });
       clearEditMode();
       // refetch campaigns
@@ -308,7 +309,7 @@ export default function Home() {
     onError: (error) => {
       setSubmitStatus({
         type: 'error',
-        message: error.message || 'Failed to update message campaign'
+        message: error.message || 'Não foi possível atualizar a campanha'
       });
     },
   });
@@ -392,9 +393,9 @@ export default function Home() {
     const requiredCount = Math.ceil(daysDiff / sequenceWidth);
     
     if (messages.length !== requiredCount) {
-      const errorMessage = `When using asterisks (*) to separate messages, please provide exactly ${requiredCount} message${requiredCount > 1 ? 's' : ''} for ${recurrence.toLowerCase()} recurrence. ` +
-        `Each message will be sent every ${sequenceWidth} day${sequenceWidth > 1 ? 's' : ''} over the ${daysDiff}-day period.\n\n` +
-        `Or remove the asterisks to use the same message for all occurrences.`;
+      const errorMessage = `Ao usar asteriscos (*) para separar mensagens, informe exatamente ${requiredCount} mensagem${requiredCount > 1 ? 's' : ''} para esta recorrência. ` +
+        `Cada mensagem será enviada a cada ${sequenceWidth} dia${sequenceWidth > 1 ? 's' : ''} durante o período de ${daysDiff} dias.\n\n` +
+        `Ou remova os asteriscos para usar a mesma mensagem em todos os envios.`;
       setSequenceError(errorMessage);
       return false;
     }
@@ -447,7 +448,7 @@ export default function Home() {
       try {
         setSubmitStatus({
           type: 'success',
-          message: `Creating ${selectedAudienceIds.length} campaign${selectedAudienceIds.length > 1 ? 's' : ''}...`
+          message: `Criando ${selectedAudienceIds.length} campanha${selectedAudienceIds.length > 1 ? 's' : ''}...`
         });
 
         // Create a campaign for each selected audience (group or individual)
@@ -478,7 +479,7 @@ export default function Home() {
         
         setSubmitStatus({
           type: 'success',
-          message: `Successfully created ${selectedAudienceIds.length} campaign${selectedAudienceIds.length > 1 ? 's' : ''}!`
+          message: `${selectedAudienceIds.length} campanha${selectedAudienceIds.length > 1 ? 's criadas' : ' criada'} com sucesso!`
         });
         
         // Clear form after successful creation
@@ -499,7 +500,7 @@ export default function Home() {
       } catch (error) {
         setSubmitStatus({
           type: 'error',
-          message: error instanceof Error ? error.message : 'Failed to create campaigns'
+          message: error instanceof Error ? error.message : 'Não foi possível criar as campanhas'
         });
       }
     }
@@ -543,12 +544,12 @@ export default function Home() {
       <main className="min-h-screen bg-[#f0f2f5]">
         {/* WhatsApp-style header */}
         <div className="bg-[#008069] text-white px-4 py-3 flex justify-between items-center">
-          <h1 className="text-xl font-medium">WhatsApp Group Manager</h1>
+          <h1 className="text-xl font-medium">Gerenciador de Grupos do WhatsApp</h1>
           <button
             onClick={handleSignOut}
             className="text-sm bg-[#ffffff1a] px-3 py-1.5 rounded-md hover:bg-[#ffffff33] transition-colors"
           >
-            Sign out
+            Sair
           </button>
         </div>
 
@@ -565,15 +566,15 @@ export default function Home() {
               </div>
             </div>
             <div className="bg-[#fff3cd] text-[#856404] p-4 rounded-lg border-l-4 border-[#ffeeba] mt-4">
-              <p className="mb-2 font-medium">Waiting for Admin Approval</p>
-              <p className="text-sm">Your account is currently pending approval from an administrator. You&apos;ll be notified once your account is approved.</p>
+              <p className="mb-2 font-medium">Aguardando aprovação do administrador</p>
+              <p className="text-sm">Sua conta está aguardando aprovação de um administrador. Você será notificado quando ela for aprovada.</p>
             </div>
           </div>
 
           {/* WhatsApp-style timestamp */}
           <div className="text-center">
             <span className="inline-block bg-[#e1f2fa] text-[#5b7083] text-xs px-2 py-1 rounded">
-              {new Date().toLocaleDateString('en-US', { 
+              {new Date().toLocaleDateString('pt-BR', {
                 weekday: 'short',
                 year: 'numeric',
                 month: 'short',
@@ -591,21 +592,21 @@ export default function Home() {
     <div>
       <main className="min-h-screen bg-[#f0f2f5]">
         <div className="bg-[#008069] text-white px-4 py-3 flex justify-between items-center">
-          <h1 className="text-xl font-medium">WhatsApp Group Manager</h1>
+          <h1 className="text-xl font-medium">Gerenciador de Grupos do WhatsApp</h1>
           <div className="flex items-center gap-3">
             {session.user.role === 'ADMIN' && (
               <button
                 onClick={() => router.push('/admin')}
                 className="text-sm bg-[#ffffff1a] px-3 py-1.5 rounded-md hover:bg-[#ffffff33] transition-colors"
               >
-                Admin Dashboard
+                Painel admin
               </button>
             )}
             <button
               onClick={handleSignOut}
               className="text-sm bg-[#ffffff1a] px-3 py-1.5 rounded-md hover:bg-[#ffffff33] transition-colors"
             >
-              Sign out
+              Sair
             </button>
           </div>
         </div>
@@ -622,7 +623,7 @@ export default function Home() {
               <div className="space-y-4">
                 <div className="bg-white border border-gray-200 rounded-lg divide-y">
                   <div className="p-4">
-                    <h3 className="text-lg font-medium mb-2">WhatsApp Session</h3>
+                    <h3 className="text-lg font-medium mb-2">Sessão do WhatsApp</h3>
                     <div className="flex items-center justify-between">
                       <div>
                         <p className="font-medium">{whatsAppSession.sessionName}</p>
@@ -635,13 +636,13 @@ export default function Home() {
                           case 'WORKING':
                             return (
                               <div className="flex items-center gap-4">
-                                <span className="text-xs bg-green-100 text-green-800 px-2 py-0.5 rounded">Connected</span>
+                                <span className="text-xs bg-green-100 text-green-800 px-2 py-0.5 rounded">Conectado</span>
                                 <button
                                   onClick={() => logoutSession.mutate({ sessionName: whatsAppSession.sessionName })}
                                   className="text-xs bg-red-100 text-red-800 px-2 py-0.5 rounded hover:bg-red-200"
                                   disabled={logoutSession.isPending}
                                 >
-                                  {logoutSession.isPending ? 'Disconnecting...' : 'Disconnect'}
+                                  {logoutSession.isPending ? 'Desconectando...' : 'Desconectar'}
                                 </button>
                               </div>
                             );
@@ -652,13 +653,13 @@ export default function Home() {
                                 onClick={() => handleRestart(whatsAppSession.sessionName)}
                                 className="text-xs bg-yellow-100 text-yellow-800 px-2 py-0.5 rounded hover:bg-yellow-200"
                               >
-                                {restartSession.isPending ? 'Restarting...' : 'Click to Restart'}
+                                {restartSession.isPending ? 'Reiniciando...' : 'Clique para reiniciar'}
                               </button>
                             );
                           case 'STARTING':
-                            return <span className="text-xs bg-blue-100 text-blue-800 px-2 py-0.5 rounded">Starting...</span>;
+                            return <span className="text-xs bg-blue-100 text-blue-800 px-2 py-0.5 rounded">Iniciando...</span>;
                           case 'SCAN_QR_CODE':
-                            return <span className="text-xs bg-blue-100 text-blue-800 px-2 py-0.5 rounded">Waiting for QR Scan</span>;
+                            return <span className="text-xs bg-blue-100 text-blue-800 px-2 py-0.5 rounded">Aguardando leitura do QR</span>;
                           default:
                             return null;
                         }
@@ -670,13 +671,13 @@ export default function Home() {
             ) : (
               <div className="space-y-4">
                 <div className="bg-[#fff3cd] text-[#856404] p-4 rounded-lg border-l-4 border-[#ffeeba]">
-                  <p className="font-medium mb-2">No WhatsApp Session Connected</p>
-                  <p className="text-sm">Connect your WhatsApp account to start managing your groups.</p>
+                  <p className="font-medium mb-2">Nenhuma sessão do WhatsApp conectada</p>
+                  <p className="text-sm">Conecte sua conta do WhatsApp para começar a gerenciar seus grupos.</p>
                 </div>
                 <h3 className="text-lg font-medium mb-4">
-                    Connect WhatsApp
+                    Conectar WhatsApp
                     <span className="text-xs ml-2 bg-gray-100 text-gray-600 px-2 py-1 rounded-full">
-                      Status: {sessionStatus ?? 'Not Connected'}
+                      Status: {sessionStatus ?? 'Não conectado'}
                     </span>
                   </h3>
                   
@@ -692,7 +693,7 @@ export default function Home() {
                         className="w-full bg-[#008069] text-white px-4 py-2 rounded-lg hover:bg-[#006d5b] transition-colors"
                         disabled={initSession.isPending}
                       >
-                        {initSession.isPending ? 'Initializing...' : 'Connect WhatsApp'}
+                        {initSession.isPending ? 'Inicializando...' : 'Conectar WhatsApp'}
                       </button>
                     )}
               </div>
@@ -703,7 +704,7 @@ export default function Home() {
                         <div className="flex items-center justify-center p-8">
                           <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#008069]"></div>
                           <span className="ml-3 text-sm text-gray-600">
-                            Starting WhatsApp session...
+                            Iniciando sessão do WhatsApp...
                           </span>
                         </div>
                       )}
@@ -711,13 +712,13 @@ export default function Home() {
                       {sessionStatus === 'SCAN_QR_CODE' && (
                         <div className="space-y-4 mt-4">
                           <div className="bg-gray-50 p-4 rounded-lg">
-                            <h4 className="font-medium mb-2">Scan QR Code</h4>
+                            <h4 className="font-medium mb-2">Escaneie o QR Code</h4>
                             <ol className="list-decimal list-inside text-sm space-y-1 text-gray-600 mb-4">
-                              <li>Open WhatsApp on your phone</li>
-                              <li>Tap Menu (⋮) or Settings</li>
-                              <li>Select Linked Devices</li>
-                              <li>Tap on &quot;Link a Device&quot;</li>
-                              <li>Point your phone to this screen to scan the code</li>
+                              <li>Abra o WhatsApp no celular</li>
+                              <li>Toque em Menu (⋮) ou Configurações</li>
+                              <li>Selecione Aparelhos conectados</li>
+                              <li>Toque em &quot;Conectar um aparelho&quot;</li>
+                              <li>Aponte o celular para esta tela para escanear o código</li>
                             </ol>
                             <div className="bg-blue-50 border-l-4 border-blue-400 p-4 mb-4">
                               <div className="flex">
@@ -728,7 +729,7 @@ export default function Home() {
                                 </div>
                                 <div className="ml-3">
                                   <p className="text-sm text-blue-700">
-                                    After scanning, if you see the WhatsApp chat screen but the status doesn&apos;t show as &quot;Connected&quot;, please refresh the page.
+                                    Depois de escanear, se você vir a tela de conversas do WhatsApp mas o status não aparecer como &quot;Conectado&quot;, atualize a página.
                                   </p>
                                 </div>
                               </div>
@@ -739,7 +740,7 @@ export default function Home() {
                                   <Image 
                                     key={screenshotKey}
                                     src={`/api/screenshot?session=${whatsAppSession.sessionName}&_=${screenshotKey}`}
-                                    alt="WhatsApp Screenshot"
+                                    alt="Captura de tela do WhatsApp"
                                     fill
                                     priority
                                     style={{ objectFit: 'contain' }}
@@ -751,7 +752,7 @@ export default function Home() {
                                   />
                                 ) : (
                                   <div className="flex items-center justify-center h-full">
-                                  <p className="text-sm text-gray-500">Waiting for session...</p>
+                                  <p className="text-sm text-gray-500">Aguardando sessão...</p>
                                   </div>
                                 )}
                                 </div>
@@ -764,9 +765,9 @@ export default function Home() {
                                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
                                     </svg>
-                                    Refresh Preview
+                                    Atualizar prévia
                                   </button>
-                                  <p className="text-sm text-gray-500">Auto-refreshes every 5s</p>
+                                  <p className="text-sm text-gray-500">Atualiza automaticamente a cada 5s</p>
                                 </div>
                                 {whatsAppSession?.sessionName && (
                                   <button
@@ -779,14 +780,14 @@ export default function Home() {
                                         <svg className="w-4 h-4 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
                                         </svg>
-                                        Restarting...
+                                        Reiniciando...
                                       </>
                                     ) : (
                                       <>
                                         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
                                         </svg>
-                                        Restart Session
+                                        Reiniciar sessão
                                       </>
                                     )}
                                   </button>
@@ -799,11 +800,11 @@ export default function Home() {
 
                       {(sessionStatus === 'STOPPED' || sessionStatus === 'FAILED') && (
                         <div className="bg-yellow-100 text-yellow-800 p-4 rounded-lg">
-                          <p className="font-medium mb-2">Session {sessionStatus === 'STOPPED' ? 'Stopped' : 'Failed'}</p>
+                          <p className="font-medium mb-2">Sessão {sessionStatus === 'STOPPED' ? 'parada' : 'com falha'}</p>
                           <p className="text-sm mb-4">
                             {sessionStatus === 'STOPPED'
-                              ? 'The WhatsApp session is currently stopped.'
-                              : 'There was an error with the WhatsApp session.'}
+                              ? 'A sessão do WhatsApp está parada.'
+                              : 'Ocorreu um erro com a sessão do WhatsApp.'}
                           </p>
                           {currentSessionName && (
                             <button
@@ -811,7 +812,7 @@ export default function Home() {
                               className="bg-yellow-200 text-yellow-800 px-4 py-2 rounded hover:bg-yellow-300 transition-colors"
                               disabled={restartSession.isPending}
                             >
-                              {restartSession.isPending ? 'Restarting...' : 'Restart Session'}
+                              {restartSession.isPending ? 'Reiniciando...' : 'Reiniciar sessão'}
                             </button>
                           )}
                         </div>
@@ -821,7 +822,7 @@ export default function Home() {
                         <div className="mt-6">
                           <div className="">
                                 <div className="flex justify-between items-center mb-4">
-                                  <h4 className="text-lg font-medium">Active Campaigns</h4>
+                                  <h4 className="text-lg font-medium">Campanhas ativas</h4>
                                   <button
                                     onClick={() => setIsCompletedCampaignsOpen(true)}
                                     className="text-sm bg-gray-100 text-gray-700 px-3 py-1.5 rounded-md hover:bg-gray-200 transition-colors flex items-center gap-2"
@@ -829,12 +830,12 @@ export default function Home() {
                                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                                     </svg>
-                                    View Completed Campaigns
+                                    Ver campanhas concluídas
                                   </button>
                                 </div>
                                 <CampaignList onEditCampaign={handleEditCampaign} />
                           </div>
-                          <h3 className="text-lg font-medium mb-4 mt-8">Select Audience</h3>
+                          <h3 className="text-lg font-medium mb-4 mt-8">Selecionar público</h3>
                           {!editingCampaign && (
                             <AudienceSelector
                               sessionName={whatsAppSession.sessionName}
@@ -849,10 +850,10 @@ export default function Home() {
                             <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-4">
                               <p className="text-sm text-blue-800">
                                 {/* eslint-disable-next-line @typescript-eslint/no-unsafe-member-access */}
-                                <strong>Editing campaign for group:</strong> {editingCampaign.group?.groupName}
+                                <strong>Editando campanha para o grupo:</strong> {editingCampaign.group?.groupName}
                               </p>
                               <p className="text-xs text-blue-600 mt-1">
-                                Note: The group cannot be changed when editing a campaign
+                                Observação: o grupo não pode ser alterado durante a edição da campanha
                               </p>
                             </div>
                           )}
@@ -861,14 +862,14 @@ export default function Home() {
                             <div className="mt-6 border-t pt-6">
                               <div className="flex justify-between items-center mb-4">
                                 <h4 className="text-lg font-medium">
-                                  {editingCampaign ? 'Edit Campaign' : 'Schedule Messages'}
+                                  {editingCampaign ? 'Editar campanha' : 'Agendar mensagens'}
                                 </h4>
                                 {editingCampaign && (
                                   <button
                                     onClick={clearEditMode}
                                     className="text-sm bg-gray-100 text-gray-700 px-3 py-1.5 rounded-md hover:bg-gray-200 transition-colors"
                                   >
-                                    Cancel Edit
+                                    Cancelar edição
                                   </button>
                                 )}
                               </div>
@@ -887,7 +888,7 @@ export default function Home() {
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                   <div>
                                     <label htmlFor="startDate" className="block text-sm font-medium text-gray-700 mb-1">
-                                      Start Date
+                                      Data inicial
                                     </label>
                                     <input
                                       type="date"
@@ -902,7 +903,7 @@ export default function Home() {
                                   
                                   <div>
                                     <label htmlFor="endDate" className="block text-sm font-medium text-gray-700 mb-1">
-                                      End Date
+                                      Data final
                                     </label>
                                     <input
                                       type="date"
@@ -919,8 +920,8 @@ export default function Home() {
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                   <div>
                                     <label htmlFor="campaignTitle" className="block text-sm font-medium text-gray-700 mb-1">
-                                      Campaign Title
-                                      <span className="text-xs text-gray-500 ml-2">(Optional)</span>
+                                      Título da campanha
+                                      <span className="text-xs text-gray-500 ml-2">(Opcional)</span>
                                     </label>
                                     <input
                                       type="text"
@@ -928,14 +929,14 @@ export default function Home() {
                                       value={campaignTitle}
                                       onChange={(e) => setCampaignTitle(e.target.value)}
                                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#008069]"
-                                      placeholder="e.g., Support for the Family of Opuk Ondiek"
+                                      placeholder="ex.: Apoio à família Silva"
                                     />
                                   </div>
                                   
                                   <div>
                                     <label htmlFor="targetAmount" className="block text-sm font-medium text-gray-700 mb-1">
-                                      Contribution Target Amount
-                                      <span className="text-xs text-gray-500 ml-2">(Optional)</span>
+                                      Meta de contribuição
+                                      <span className="text-xs text-gray-500 ml-2">(Opcional)</span>
                                     </label>
                                     <input
                                       type="text"
@@ -943,7 +944,7 @@ export default function Home() {
                                       value={targetAmount}
                                       onChange={(e) => setTargetAmount(e.target.value)}
                                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#008069]"
-                                      placeholder="e.g., $10,000"
+                                      placeholder="ex.: R$ 10.000"
                                     />
                                   </div>
                                 </div>
@@ -951,7 +952,7 @@ export default function Home() {
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                   <div>
                                     <label htmlFor="messageTime" className="block text-sm font-medium text-gray-700 mb-1">
-                                      Time to Send
+                                      Horário de envio
                                     </label>
                                     <input
                                       type="time"
@@ -965,7 +966,7 @@ export default function Home() {
                                   
                                   <div>
                                     <label htmlFor="timeZone" className="block text-sm font-medium text-gray-700 mb-1">
-                                      Time Zone
+                                      Fuso horário
                                     </label>
                                     <select
                                       id="timeZone"
@@ -998,7 +999,7 @@ export default function Home() {
                                     className="h-4 w-4 text-[#008069] focus:ring-[#008069] border-gray-300 rounded"
                                   />
                                   <label htmlFor="isRecurring" className="text-sm text-gray-700">
-                                    Recurring Messages
+                                    Mensagens recorrentes
                                   </label>
                                 </div>
 
@@ -1011,14 +1012,14 @@ export default function Home() {
                                     className="h-4 w-4 text-[#008069] focus:ring-[#008069] border-gray-300 rounded"
                                   />
                                   <label htmlFor="isFreeForm" className="text-sm font-medium text-gray-700">
-                                    Make this a free form message campaign
+                                    Criar campanha com mensagem livre
                                   </label>
                                 </div>
 
                                 {isRecurring && (
                                   <div>
                                     <label htmlFor="recurrence" className="block text-sm font-medium text-gray-700 mb-1">
-                                      Recurrence Pattern
+                                      Padrão de recorrência
                                     </label>
                                     <select
                                       id="recurrence"
@@ -1030,7 +1031,7 @@ export default function Home() {
                                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#008069]"
                                       required={isRecurring}
                                     >
-                                      <option value="">Select a pattern</option>
+                                      <option value="">Selecione um padrão</option>
                                       {recurrenceOptions.map((option) => (
                                         <option key={option.value} value={option.value}>
                                           {option.label}
@@ -1042,7 +1043,7 @@ export default function Home() {
 
                                 <div>
                                   <label htmlFor="messageTemplate" className="block text-sm font-medium text-gray-700 mb-1">
-                                    Message Template
+                                    Modelo da mensagem
                                   </label>
                                   <div className="relative">
                                     <textarea
@@ -1057,7 +1058,7 @@ export default function Home() {
                                         }
                                       }}
                                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#008069] min-h-[120px]"
-                                      placeholder={isRecurring ? "Enter messages separated by * (asterisk). Example:\nMessage for first period * Message for second period" : "Enter your message"}
+                                      placeholder={isRecurring ? "Digite mensagens separadas por * (asterisco). Exemplo:\nMensagem do primeiro período * Mensagem do segundo período" : "Digite sua mensagem"}
                                       required
                                     />
                                     {isRecurring && recurrence && (
@@ -1066,7 +1067,7 @@ export default function Home() {
                                           recurrence === 'WEEKLY' ? '7' :
                                           recurrence === 'SEMI_MONTHLY' ? '2' :
                                           recurrence === 'MONTHLY' ? '12' :
-                                          recurrence === 'SEMI_ANNUALLY' ? '2' : '1'} messages
+                                          recurrence === 'SEMI_ANNUALLY' ? '2' : '1'} mensagens
                                       </div>
                                     )}
                                   </div>
@@ -1077,14 +1078,14 @@ export default function Home() {
                                   )}
                                   {isRecurring && !sequenceError && (
                                     <p className="mt-1 text-sm text-gray-500">
-                                      Separate multiple messages with an asterisk (*). Each message will be sent according to the recurrence pattern.
+                                      Separe várias mensagens com asterisco (*). Cada mensagem será enviada conforme o padrão de recorrência.
                                     </p>
                                   )}
                                 </div>
 
                                 {messageTemplate && messagePreview && (
                                   <div className="bg-gray-50 p-4 rounded-lg">
-                                    <h5 className="text-sm font-medium text-gray-700 mb-2">Message Preview</h5>
+                                    <h5 className="text-sm font-medium text-gray-700 mb-2">Prévia da mensagem</h5>
                                     <div className="bg-white p-3 rounded border border-gray-200 whitespace-pre-wrap">
                                       {messagePreview}
                                     </div>
@@ -1102,8 +1103,8 @@ export default function Home() {
                                   }
                                 >
                                   {editingCampaign 
-                                    ? (updateCampaign.isPending ? 'Updating Campaign...' : 'Update Campaign')
-                                    : (createCampaign.isPending ? 'Creating Campaign...' : 'Schedule Messages')
+                                    ? (updateCampaign.isPending ? 'Atualizando campanha...' : 'Atualizar campanha')
+                                    : (createCampaign.isPending ? 'Criando campanha...' : 'Agendar mensagens')
                                   }
                                 </button>
                               </form>
@@ -1114,7 +1115,7 @@ export default function Home() {
 
                       <div className="text-center mt-4">
                         <span className="text-sm text-gray-500">
-                          Status: {sessionStatus ?? 'Initializing...'}
+                          Status: {sessionStatus ?? 'Inicializando...'}
                         </span>
                       </div>
                     </div>

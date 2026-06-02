@@ -28,7 +28,7 @@ export function CompletedCampaignsModal({ isOpen, onClose }: {
       <div className="fixed inset-0 z-50 flex items-center justify-center p-4 pointer-events-none">
         <div className="bg-white rounded-lg shadow-xl w-full max-w-4xl max-h-[90vh] flex flex-col pointer-events-auto">
           <div className="p-4 border-b flex items-center justify-between">
-            <h2 className="text-lg font-medium">Completed Campaigns</h2>
+            <h2 className="text-lg font-medium">Campanhas concluídas</h2>
             <button
               onClick={onClose}
               className="text-gray-500 hover:text-gray-700"
@@ -42,7 +42,7 @@ export function CompletedCampaignsModal({ isOpen, onClose }: {
           <div className="p-4 border-b">
             <input
               type="text"
-              placeholder="Search by group name or message template..."
+              placeholder="Buscar por nome do grupo ou modelo da mensagem..."
               className="w-full px-3 py-2 border border-gray-300 rounded-md"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
@@ -57,7 +57,7 @@ export function CompletedCampaignsModal({ isOpen, onClose }: {
               </div>
             ) : !filteredCampaigns?.length ? (
               <div className="text-center py-8 text-gray-500">
-                No completed campaigns found
+                Nenhuma campanha concluída encontrada
               </div>
             ) : (
               <div className="space-y-4">
@@ -83,22 +83,22 @@ export function CompletedCampaignsModal({ isOpen, onClose }: {
                         </p>
                         {campaign.targetAmount && (
                           <p className="text-sm text-blue-600 font-medium">
-                            Target: {campaign.targetAmount}
+                            Meta: {campaign.targetAmount}
                           </p>
                         )}
                       </div>
 
                       <div className="space-y-2">
                         <div className="flex justify-between text-sm">
-                          <span>Final Status: {sentCount} of {totalMessages} messages sent</span>
+                          <span>Status final: {sentCount} de {totalMessages} mensagens enviadas</span>
                           <span className="text-gray-500">
-                            {Math.round((sentCount / totalMessages) * 100)}% Complete
+                            {Math.round((sentCount / totalMessages) * 100)}% concluído
                           </span>
                         </div>
                       </div>
 
                       <div className="text-sm text-gray-600 whitespace-pre-wrap border-t pt-2 mt-2">
-                        <strong>Template:</strong> {campaign.template}
+                        <strong>Modelo:</strong> {campaign.template}
                       </div>
                     </div>
                   );

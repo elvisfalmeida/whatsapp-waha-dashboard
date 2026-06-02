@@ -39,7 +39,7 @@ async function checkAndSendScheduledMessages() {
         });
 
         if (messagesToSend.length === 0) {
-            console.log(`[${now.toISOString()}] No pending messages to send`);
+            console.log(`[${now.toISOString()}] Nenhuma mensagem pendente para enviar`);
             return;
         }
 
@@ -53,8 +53,8 @@ async function checkAndSendScheduledMessages() {
                     }
                 });
                 // Send message using WhatsApp API
-                console.log(`Sending message to group ${message.MessageCampaign?.group.groupName}: ${message.content}`);
-                console.log(`Message ID: ${message.id}, Scheduled At: ${message.scheduledAt.toISOString()}`);
+                console.log(`Enviando mensagem para o grupo ${message.MessageCampaign?.group.groupName}: ${message.content}`);
+                console.log(`ID da mensagem: ${message.id}, agendada para: ${message.scheduledAt.toISOString()}`);
                 const response = await fetch(`${process.env.WAHA_API_URL}/api/sendText`, {
                     method: 'POST',
                     headers: {
@@ -72,7 +72,7 @@ async function checkAndSendScheduledMessages() {
                 });
 
                 if (response.status !== 201) {
-                    throw new Error(`Failed to send WhatsApp message: ${response.statusText}`);
+                    throw new Error(`Falha ao enviar mensagem do WhatsApp: ${response.statusText}`);
                 }
 
                 // Update message as sent
@@ -112,7 +112,7 @@ async function checkAndSendScheduledMessages() {
 
                 console.log(`Successfully processed message ${message.id}`);
             } catch (error) {
-                console.error(`Error processing message ${message.id}:`, error);
+                console.error(`Erro ao processar mensagem ${message.id}:`, error);
                 
                 // If there's an error, mark the campaign as failed
                 if (message.MessageCampaign) {
@@ -128,7 +128,7 @@ async function checkAndSendScheduledMessages() {
             }
         }
     } catch (error) {
-        console.error('Error in checkAndSendScheduledMessages:', error);
+        console.error('Erro em checkAndSendScheduledMessages:', error);
     }
 }
 

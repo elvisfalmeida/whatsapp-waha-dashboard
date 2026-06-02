@@ -17,14 +17,14 @@ export async function sendResetPasswordEmail(email: string, url: string) {
   const emailData = {
     from: env.FROM_EMAIL,
     to: email,
-    subject: "Reset Your Password - WhatsApp Group Manager",
+    subject: "Redefina sua senha - Gerenciador de Grupos do WhatsApp",
     html: `
       <!DOCTYPE html>
       <html>
         <head>
           <meta charset="utf-8">
           <meta name="viewport" content="width=device-width, initial-scale=1.0">
-          <title>Reset Your Password</title>
+          <title>Redefina sua senha</title>
           <style>
             body {
               font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
@@ -99,63 +99,63 @@ export async function sendResetPasswordEmail(email: string, url: string) {
         <body>
           <div class="container">
             <div class="header">
-              <div class="logo">📱 WhatsApp Group Manager</div>
-              <h1 class="title">Reset Your Password</h1>
-              <p class="subtitle">We received a request to reset your password</p>
+              <div class="logo">Gerenciador de Grupos do WhatsApp</div>
+              <h1 class="title">Redefina sua senha</h1>
+              <p class="subtitle">Recebemos uma solicitação para redefinir sua senha</p>
             </div>
             
             <div class="content">
-              <p>Hi there,</p>
-              <p>You recently requested to reset your password for your WhatsApp Group Manager account. Click the button below to reset it:</p>
+              <p>Olá,</p>
+              <p>Você solicitou recentemente a redefinição da senha da sua conta no Gerenciador de Grupos do WhatsApp. Clique no botão abaixo para redefini-la:</p>
               
               <div style="text-align: center;">
-                <a href="${resetUrl}" class="reset-button">Reset Your Password</a>
+                <a href="${resetUrl}" class="reset-button">Redefinir senha</a>
               </div>
               
               <div class="warning">
-                <strong>⚠️ Security Notice:</strong> This password reset link will expire in 1 hour for your security. If you didn't request this password reset, please ignore this email or contact support if you have concerns.
+                <strong>⚠️ Aviso de segurança:</strong> este link de redefinição expira em 1 hora. Se você não solicitou esta redefinição, ignore este email ou entre em contato com o suporte.
               </div>
               
-              <p>If the button above doesn't work, copy and paste the following URL into your browser:</p>
+              <p>Se o botão acima não funcionar, copie e cole a URL abaixo no navegador:</p>
               <p style="word-break: break-all; background-color: #f8f9fa; padding: 10px; border-radius: 4px; font-family: monospace;">
                 ${resetUrl}
               </p>
             </div>
             
             <div class="footer">
-              <p>If you didn't request this password reset, you can safely ignore this email.</p>
-              <p>This email was sent from WhatsApp Group Manager. Please do not reply to this email.</p>
+              <p>Se você não solicitou esta redefinição, pode ignorar este email com segurança.</p>
+              <p>Este email foi enviado pelo Gerenciador de Grupos do WhatsApp. Não responda a esta mensagem.</p>
             </div>
           </div>
         </body>
       </html>
     `,
     text: `
-      Reset Your Password - WhatsApp Group Manager
+      Redefina sua senha - Gerenciador de Grupos do WhatsApp
       
-      Hi there,
+      Olá,
       
-      You recently requested to reset your password for your WhatsApp Group Manager account.
+      Você solicitou recentemente a redefinição da senha da sua conta no Gerenciador de Grupos do WhatsApp.
       
-      Please use the following link to reset your password:
+      Use o link abaixo para redefinir sua senha:
       ${resetUrl}
       
-      This link will expire in 1 hour for your security.
+      Este link expira em 1 hora para sua segurança.
       
-      If you didn't request this password reset, please ignore this email.
+      Se você não solicitou esta redefinição, ignore este email.
       
       ---
-      WhatsApp Group Manager
+      Gerenciador de Grupos do WhatsApp
     `,
   };
 
   try {
     const response = await mg.messages.create(env.MAILGUN_DOMAIN, emailData);
-    console.log("Reset password email sent successfully:", response);
+    console.log("Email de redefinição de senha enviado com sucesso:", response);
     return { success: true, messageId: response.id };
   } catch (error) {
-    console.error("Failed to send reset password email:", error);
-    throw new Error("Failed to send reset password email");
+    console.error("Falha ao enviar email de redefinição de senha:", error);
+    throw new Error("Falha ao enviar email de redefinição de senha");
   }
 }
 
@@ -163,14 +163,14 @@ export async function sendPasswordChangedNotification(email: string) {
   const emailData = {
     from: env.FROM_EMAIL,
     to: email,
-    subject: "Password Changed Successfully - WhatsApp Group Manager",
+    subject: "Senha alterada com sucesso - Gerenciador de Grupos do WhatsApp",
     html: `
       <!DOCTYPE html>
       <html>
         <head>
           <meta charset="utf-8">
           <meta name="viewport" content="width=device-width, initial-scale=1.0">
-          <title>Password Changed</title>
+          <title>Senha alterada</title>
           <style>
             body {
               font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
@@ -231,55 +231,55 @@ export async function sendPasswordChangedNotification(email: string) {
         <body>
           <div class="container">
             <div class="header">
-              <div class="logo">📱 WhatsApp Group Manager</div>
+              <div class="logo">Gerenciador de Grupos do WhatsApp</div>
               <div class="success-icon">✅</div>
-              <h1 class="title">Password Changed Successfully</h1>
+              <h1 class="title">Senha alterada com sucesso</h1>
             </div>
             
             <div class="content">
-              <p>Hi there,</p>
-              <p>This email confirms that your password for your WhatsApp Group Manager account has been successfully changed.</p>
+              <p>Olá,</p>
+              <p>Este email confirma que a senha da sua conta no Gerenciador de Grupos do WhatsApp foi alterada com sucesso.</p>
               
               <div class="info-box">
-                <strong>✓ Password Updated:</strong> Your account is now secured with your new password.
+                <strong>✓ Senha atualizada:</strong> sua conta agora está protegida com a nova senha.
               </div>
               
-              <p>If you made this change, no further action is required. Your account remains secure.</p>
+              <p>Se você fez esta alteração, nenhuma ação adicional é necessária. Sua conta permanece segura.</p>
               
-              <p><strong>Didn't make this change?</strong> If you did not request this password change, please contact our support team immediately as your account may have been compromised.</p>
+              <p><strong>Não fez esta alteração?</strong> Se você não solicitou esta troca de senha, entre em contato com o suporte imediatamente, pois sua conta pode ter sido comprometida.</p>
             </div>
             
             <div class="footer">
-              <p>For your security, we recommend using a strong, unique password.</p>
-              <p>This email was sent from WhatsApp Group Manager. Please do not reply to this email.</p>
+              <p>Para sua segurança, recomendamos usar uma senha forte e exclusiva.</p>
+              <p>Este email foi enviado pelo Gerenciador de Grupos do WhatsApp. Não responda a esta mensagem.</p>
             </div>
           </div>
         </body>
       </html>
     `,
     text: `
-      Password Changed Successfully - WhatsApp Group Manager
+      Senha alterada com sucesso - Gerenciador de Grupos do WhatsApp
       
-      Hi there,
+      Olá,
       
-      This email confirms that your password for your WhatsApp Group Manager account has been successfully changed.
+      Este email confirma que a senha da sua conta no Gerenciador de Grupos do WhatsApp foi alterada com sucesso.
       
-      If you made this change, no further action is required.
+      Se você fez esta alteração, nenhuma ação adicional é necessária.
       
-      If you did not request this password change, please contact our support team immediately.
+      Se você não solicitou esta troca de senha, entre em contato com o suporte imediatamente.
       
       ---
-      WhatsApp Group Manager
+      Gerenciador de Grupos do WhatsApp
     `,
   };
 
   try {
     const response = await mg.messages.create(env.MAILGUN_DOMAIN, emailData);
-    console.log("Password changed notification sent successfully:", response);
+    console.log("Notificação de senha alterada enviada com sucesso:", response);
     return { success: true, messageId: response.id };
   } catch (error) {
-    console.error("Failed to send password changed notification:", error);
-    throw new Error("Failed to send password changed notification");
+    console.error("Falha ao enviar notificação de senha alterada:", error);
+    throw new Error("Falha ao enviar notificação de senha alterada");
   }
 }
 
@@ -287,14 +287,14 @@ export async function sendUserRegistrationNotificationToAdmin(userName: string, 
   const emailData = {
     from: env.FROM_EMAIL,
     to: env.ADMIN_EMAIL,
-    subject: "New User Registration - Approval Required",
+    subject: "Novo cadastro de usuário - Aprovação necessária",
     html: `
       <!DOCTYPE html>
       <html>
         <head>
           <meta charset="utf-8">
           <meta name="viewport" content="width=device-width, initial-scale=1.0">
-          <title>New User Registration</title>
+          <title>Novo cadastro de usuário</title>
           <style>
             body {
               font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
@@ -367,69 +367,69 @@ export async function sendUserRegistrationNotificationToAdmin(userName: string, 
         <body>
           <div class="container">
             <div class="header">
-              <div class="logo">📱 WhatsApp Group Manager</div>
+              <div class="logo">Gerenciador de Grupos do WhatsApp</div>
               <div class="notification-icon">🔔</div>
-              <h1 class="title">New User Registration</h1>
+              <h1 class="title">Novo cadastro de usuário</h1>
             </div>
             
             <div class="content">
-              <p>Hello Admin,</p>
-              <p>A new user has registered and is waiting for approval to access the WhatsApp Group Manager.</p>
+              <p>Olá, administrador.</p>
+              <p>Um novo usuário se cadastrou e está aguardando aprovação para acessar o Gerenciador de Grupos do WhatsApp.</p>
               
               <div class="user-details">
-                <div class="user-detail"><strong>Name:</strong> ${userName}</div>
+                <div class="user-detail"><strong>Nome:</strong> ${userName}</div>
                 <div class="user-detail"><strong>Email:</strong> ${userEmail}</div>
-                <div class="user-detail"><strong>Registration Date:</strong> ${new Date().toLocaleDateString()}</div>
+                <div class="user-detail"><strong>Data de cadastro:</strong> ${new Date().toLocaleDateString('pt-BR')}</div>
               </div>
               
-              <p>Please review this registration and approve or reject the user access as appropriate.</p>
+              <p>Revise este cadastro e aprove ou rejeite o acesso do usuário conforme necessário.</p>
               
               <div style="text-align: center;">
                 <a href="${env.BETTER_AUTH_URL}/admin" class="action-button">
-                  Go to Admin Dashboard
+                  Ir para o painel admin
                 </a>
               </div>
             </div>
             
             <div class="footer">
-              <p>This notification was sent automatically from WhatsApp Group Manager.</p>
-              <p>Please do not reply to this email.</p>
+              <p>Esta notificação foi enviada automaticamente pelo Gerenciador de Grupos do WhatsApp.</p>
+              <p>Não responda a este email.</p>
             </div>
           </div>
         </body>
       </html>
     `,
     text: `
-      New User Registration - WhatsApp Group Manager
+      Novo cadastro de usuário - Gerenciador de Grupos do WhatsApp
       
-      Hello Admin,
+      Olá, administrador.
       
-      A new user has registered and is waiting for approval:
+      Um novo usuário se cadastrou e está aguardando aprovação:
       
-      Name: ${userName}
+      Nome: ${userName}
       Email: ${userEmail}
-      Registration Date: ${new Date().toLocaleDateString()}
+      Data de cadastro: ${new Date().toLocaleDateString('pt-BR')}
       
-      Please review this registration in the admin dashboard.
+      Revise este cadastro no painel admin.
       
       ---
-      WhatsApp Group Manager
+      Gerenciador de Grupos do WhatsApp
     `,
   };
 
   try {
     const response = await mg.messages.create(env.MAILGUN_DOMAIN, emailData);
-    console.log("User registration notification sent successfully:", response);
+    console.log("Notificação de cadastro de usuário enviada com sucesso:", response);
     return { success: true, messageId: response.id };
   } catch (error) {
-    console.error("Failed to send user registration notification:", error);
-    throw new Error("Failed to send user registration notification");
+    console.error("Falha ao enviar notificação de cadastro de usuário:", error);
+    throw new Error("Falha ao enviar notificação de cadastro de usuário");
   }
 }
 
 export async function sendWhatsAppNotificationToAdmin(userName: string, userEmail: string) {
   if (!env.ADMIN_PHONE_NUMBER) {
-    throw new Error("Admin phone number not configured");
+    throw new Error("Telefone do administrador não configurado");
   }
 
   const admin = await db.user.findFirst({
@@ -441,7 +441,7 @@ export async function sendWhatsAppNotificationToAdmin(userName: string, userEmai
     },
     });
     if (!admin) {
-    throw new Error("No admin user found in the database");
+    throw new Error("Nenhum usuário administrador encontrado no banco de dados");
     }
     const adminSession = await db.whatsAppSession.findFirst({
         where: {
@@ -451,18 +451,18 @@ export async function sendWhatsAppNotificationToAdmin(userName: string, userEmai
 
 
   if (!adminSession) {
-    throw new Error("No active WhatsApp session found for admin");
+    throw new Error("Nenhuma sessão ativa do WhatsApp encontrada para o administrador");
   }
 
-  const message = `🔔 *New User Registration*
+  const message = `🔔 *Novo cadastro de usuário*
 
-A new user has registered for WhatsApp Group Manager:
+Um novo usuário se cadastrou no Gerenciador de Grupos do WhatsApp:
 
-👤 *Name:* ${userName}
+👤 *Nome:* ${userName}
 📧 *Email:* ${userEmail}
-📅 *Date:* ${new Date().toLocaleDateString()}
+📅 *Data:* ${new Date().toLocaleDateString('pt-BR')}
 
-Please review and approve this registration in the admin dashboard.
+Revise e aprove este cadastro no painel admin.
 
 ${env.BETTER_AUTH_URL}/admin`;
 
@@ -482,13 +482,13 @@ ${env.BETTER_AUTH_URL}/admin`;
     });
 
     if (!response.ok) {
-      throw new Error(`Failed to send WhatsApp message: ${response.statusText}`);
+      throw new Error(`Falha ao enviar mensagem do WhatsApp: ${response.statusText}`);
     }
 
-    console.log("WhatsApp notification sent successfully to admin");
+    console.log("Notificação do WhatsApp enviada com sucesso ao administrador");
     return { success: true };
   } catch (error) {
-    console.error("Failed to send WhatsApp notification:", error);
+    console.error("Falha ao enviar notificação do WhatsApp:", error);
     throw error;
   }
 }
@@ -499,22 +499,22 @@ export async function notifyAdminOfNewRegistration(userName: string, userEmail: 
   try {
     await sendWhatsAppNotificationToAdmin(userName, userEmail);
     results.whatsapp = true;
-    console.log("WhatsApp notification sent successfully");
+    console.log("Notificação do WhatsApp enviada com sucesso");
   } catch (error) {
-    console.log("WhatsApp notification failed, falling back to email:", error);
-    results.errors.push(`WhatsApp failed: ${error instanceof Error ? error.message : 'Unknown error'}`);
+    console.log("Falha na notificação do WhatsApp, usando email como fallback:", error);
+    results.errors.push(`Falha no WhatsApp: ${error instanceof Error ? error.message : 'Erro desconhecido'}`);
     try {
         await sendUserRegistrationNotificationToAdmin(userName, userEmail);
         results.email = true;
-        console.log("Email notification sent successfully");
+        console.log("Notificação por email enviada com sucesso");
     } catch (error) {
-        console.error("Email notification also failed:", error);
-        results.errors.push(`Email failed: ${error instanceof Error ? error.message : 'Unknown error'}`);
+        console.error("Notificação por email também falhou:", error);
+        results.errors.push(`Falha no email: ${error instanceof Error ? error.message : 'Erro desconhecido'}`);
     }
   }
 
   if (!results.whatsapp && !results.email) {
-    throw new Error(`Failed to send notifications: ${results.errors.join(', ')}`);
+    throw new Error(`Falha ao enviar notificações: ${results.errors.join(', ')}`);
   }
 
   return results;

@@ -34,15 +34,15 @@ export function SignUpForm() {
             userName: name,
             userEmail: email,
           });
-          console.log("Admin notification sent successfully");
+          console.log("Notificação ao administrador enviada com sucesso");
         } catch (notificationError) {
-          console.error("Failed to send admin notification:", notificationError);
+          console.error("Falha ao enviar notificação ao administrador:", notificationError);
         }
         
         router.push("/auth")
       }
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to sign up');
+      setError(err instanceof Error ? err.message : 'Não foi possível criar a conta');
     } finally {
       setLoading(false);
     }
@@ -52,7 +52,7 @@ export function SignUpForm() {
     <form onSubmit={handleSubmit} className="space-y-4 w-full max-w-sm">
       <div>
         <label htmlFor="name" className="block text-sm font-medium text-gray-700">
-          Name
+          Nome
         </label>
         <input
           id="name"
@@ -84,7 +84,7 @@ export function SignUpForm() {
 
       <div>
         <label htmlFor="password" className="block text-sm font-medium text-gray-700">
-          Password
+          Senha
         </label>
         <input
           id="password"
@@ -109,7 +109,7 @@ export function SignUpForm() {
         disabled={loading}
         className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
       >
-        {loading ? 'Signing up...' : 'Sign up'}
+        {loading ? 'Cadastrando...' : 'Cadastrar'}
       </button>
     </form>
   );
